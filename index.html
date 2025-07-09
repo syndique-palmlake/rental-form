@@ -375,6 +375,43 @@
                     <div class="sub-step">Une transmission du dossier au
 
         </div>
+                    <div class="form-section">
+                    <h2>VALIDATION & SIGNATURE ÉLECTRONIQUE</h2>
+                    
+                    <div class="signature-section">
+                        <p><strong>J'accepte les Conditions Générales d'Utilisation et le règlement intérieur</strong></p>
+                        
+                        <div class="commitment-item" style="margin-top: 20px;">
+                            <input type="checkbox" id="acceptTerms" >
+                            <label for="acceptTerms" class="required">Je valide et signe ce formulaire de façon électronique.</label>
+                        </div>
+                        
+                        <div class="signature-pad" id="signaturePad">
+    <canvas id="signatureCanvas" width="300" height="150" style="border: 1px solid #000;"></canvas>
+</div>
+
+                        <button type="button" class="btn-upload" onclick="clearSignature()">Effacer la signature</button>
+                        
+                        <div class="signature-label">Signature électronique</div>
+                        <div class="signature-date">Fait à Monastir, le <span id="currentDate"></span></div>
+                    </div>
+                </div>
+                
+                <!-- Submit Section -->
+                <div class="btn-container">
+                    <button type="button" class="btn btn-reset">
+                        <i class="fas fa-redo"></i> Réinitialiser
+                    </button>
+                    <button type="submit" class="btn btn-submit">
+                        <i class="fas fa-check-circle"></i> Soumettre le formulaire
+                    </button>
+                </div>
+                <div id="successMessage" style="display: none; color: green; margin-top: 20px;">
+                ✅ Formulaire soumis avec succès ! Veuillez l’imprimer et le présenter à la caisse du Syndic.
+                </div>
+                <div id="FailedMessage" style="display: none; color: red; margin-top: 20px;">
+                ❌ Veuillez remplir tous les champs obligatoires et accepter les conditions.
+                </div>
         
         <footer>
             <p>Résidence Aqua Resort &copy; 2025 | Tous droits réservés</p>
