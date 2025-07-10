@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
 
-    // Set default values for start and end dates
     const startDateEl = document.getElementById('startDate');
     const endDateEl = document.getElementById('endDate');
 
@@ -14,7 +13,6 @@ document.addEventListener('DOMContentLoaded', function () {
         startDateEl.min = today.toISOString().split('T')[0];
     }
 
-    // Input styling on change
     const inputs = document.querySelectorAll('input, select');
     inputs.forEach(input => {
         input.addEventListener('input', function () {
@@ -22,7 +20,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Initial calculations
+    // Attach bracelet calculation
+    document.getElementById('adults')?.addEventListener('input', calculateBracelets);
+    document.getElementById('children')?.addEventListener('input', calculateBracelets);
+
     setCurrentDate();
     calculateFees();
     calculateBracelets();
