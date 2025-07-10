@@ -1,158 +1,192 @@
+// ========== INITIAL SETUP ==========
 document.addEventListener('DOMContentLoaded', function () {
-    // Elements
-    const startDateEl = document.getElementById('startDate');
-    const endDateEl = document.getElementById('endDate');
-    const apartmentTypeEl = document.getElementById('apartmentType');
-    const adultsEl = document.getElementById('adults');
-    const childrenEl = document.getElementById('children');
-    const braceletsEl = document.getElementById('bracelets');
-    const otherTypeContainer = document.getElementById('otherTypeContainer');
+    setCurrentDate();
+    setDefaultDates();
+    setupInputStyles();
+    setupEventListeners();
+    calculateFees();
+    calculateBracelets();
+});
 
-    // Set start/end date defaults
+// ========== SET CURRENT DATE ==========
+function setCurrentDate() {
+    const now = new Date();
+    const formattedDate = now.toLocaleDateString('fr-FR', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    });
+    const dateElem = document.getElementById('currentDate');
+    if (dateElem) dateElem.textContent = formattedDate;
+}
+
+// ========== SET DEFAULT DATES ==========
+function setDefaultDates() {
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
-    if (startDateEl && endDateEl) {
-        startDateEl.valueAsDate = today;
-        endDateEl.valueAsDate = tomorrow;
-        startDateEl.min = today.toISOString().split('T')[0];
+    const startInput = document.getElementById('startDate');
+    const endInput = document.getElementById('endDate');
+    if (startInput && endInput) {
+        startInput.valueAsDate = today;
+        endInput.valueAsDate = tomorrow;
+        startInput.min = today.toISOString().split('T')[0];
     }
-
-    // Set current date in French
-    const currentDateEl = document.getElementById('currentDate');
-    if (currentDateEl) {
-        const formattedDate = today.toLocaleDateString('fr-FR', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-        });
-        currentDateEl.textContent = formattedDate;
-    }
-
-    // Event listeners
-    if (apartmentTypeEl) {
-        apartmentTypeEl.addEventListener('change', () => {
-            if (apartmentTypeEl.value === 'other') {
-                otherTypeContainer.style.display = 'block';
-            } else {
-                otherTypeContainer.style.display = 'none';
-            }
-            calculateFees();
-        });
-    }
-
-    startDateEl?.addEventListener('change', calculateFees);
-    endDateEl?.addEventListener('change', calculateFees);
-    adultsEl?.addEventListener('input', () => {
-        calculateBracelets();
-        calculateFees();
-    });
-    childrenEl?.addEventListener('input', () => {
-        calculateBracelets();
-        calculateFees();
-    });
-
-    // Calculate initial values
-    calculateFees();
-    calculateBracelets();
-
-    // Form reset
-    document.querySelector('.btn-reset')?.addEventListener('click', () => {
-        document.getElementById('rentalForm').reset();
-        clearSignature();
-        if (otherTypeContainer) otherTypeContainer.style.display = 'none';
-        document.getElementById('fixedFee').textContent = '30 DT';
-        document.getElementById('variableFee').textContent = '0 DT';
-        document.getElementById('totalFee').textContent = '30 DT';
-        document.getElementById('successMessage').style.display = 'none';
-        document.getElementById('FailedMessage').style.display = 'none';
-        calculateBracelets();
-        setCurrentDate();
-    });
-
-    // Signature canvas
-    initSignaturePad();
-
-    // Form submission
-    document.getElementById('rentalForm')?.addEventListener('submit', function (e) {
-        e.preventDefault();
-        const valid = validateForm();
-        if (valid) {
-            this.reset();
-            clearSignature();
-            calculateFees();
-            calculateBracelets();
-            setCurrentDate();
-            document.getElementById('successMessage').style.display = 'block';
-            document.getElementById('FailedMessage').style.display = 'none';
-            if (otherTypeContainer) otherTypeContainer.style.display = 'none';
-        } else {
-            document.getElementById('successMessage').style.display = 'none';
-            document.getElementById('FailedMessage').style.display = 'block';
-        }
-    });
-});
-
-// ===== FEES CALCULATION =====
-function calculateFees() {
-    const type = document.getElementById('apartmentType')?.value;
-    const startStr = document.getElementById('startDate')?.value;
-    const endStr = document.getElementById('endDate')?.value;
-
-    if (!type || !startStr || !endStr) return;
-
-    const start = new Date(startStr);
-    const end = new Date(endStr);
-    if (isNaN(start) || isNaN(end)) return;
-
-    const nights = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
-    if (nights <= 0) return;
-
-    const fixed = 30;
-    let variable = 0;
-
-    const rates = {
-        s0: [40, 80],
-        s1: [60, 120],
-        s2: [80, 160],
-        s3: [100, 200],
-    };
-
-    if (rates[type]) {
-        variable = nights <= 10 ? rates[type][0] : rates[type][1];
-    }
-
-    document.getElementById('fixedFee').textContent = `${fixed} DT`;
-    document.getElementById('variableFee').textContent = `${variable} DT`;
-    document.getElementById('totalFee').textContent = `${fixed + variable} DT`;
 }
 
-// ===== BRACELET COUNT =====
+// ========== INPUT STYLE ON CHANGE ==========
+function setupInputStyles() {
+    const inputs = document.querySelectorAll('input, select');
+    inputs.forEach(input => {
+        input.addEventListener('input', function () {
+            if (this.value) {
+                this.style.borderColor = '#d4af37';
+            }
+        });
+    });
+}
+
+// ========== EVENT LISTENERS ==========
+function setupEventListeners() {
+    const form = document.getElementById('rentalform');
+    const apartmentTypeSelect = document.getElementById('apartmentType');
+    const resetBtn = document.querySelector('.btn-reset');
+    const submitBtn = document.querySelector('.btn-submit');
+    const adultInput = document.getElementById('adults');
+    const childInput = document.getElementById('children');
+    const startInput = document.getElementById('startDate');
+    const endInput = document.getElementById('endDate');
+
+    if (apartmentTypeSelect) {
+        apartmentTypeSelect.addEventListener('change', function () {
+            const otherContainer = document.getElementById('otherTypeContainer');
+            otherContainer.style.display = this.value === 'other' ? 'block' : 'none';
+            calculateFees();
+        });
+    }
+
+    if (resetBtn) resetBtn.addEventListener('click', resetForm);
+    if (submitBtn) submitBtn.addEventListener('click', validateForm);
+    if (adultInput) adultInput.addEventListener('input', calculateBracelets);
+    if (childInput) childInput.addEventListener('input', calculateBracelets);
+    if (startInput) startInput.addEventListener('change', calculateFees);
+    if (endInput) endInput.addEventListener('change', calculateFees);
+    if (apartmentTypeSelect) apartmentTypeSelect.addEventListener('change', calculateFees);
+}
+
+// ========== CALCULATE FEES ==========
+function calculateFees() {
+    const apartmentType = document.getElementById('apartmentType').value;
+    const startDate = new Date(document.getElementById('startDate').value);
+    const endDate = new Date(document.getElementById('endDate').value);
+    const fixedFee = 30;
+    let variableFee = 0;
+
+    if (apartmentType && !isNaN(startDate) && !isNaN(endDate) && startDate < endDate) {
+        const nights = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+        const rateTable = {
+            s0: [40, 80],
+            s1: [60, 120],
+            s2: [80, 160],
+            s3: [100, 200]
+        };
+        const rates = rateTable[apartmentType];
+        if (rates) {
+            variableFee = nights <= 10 ? rates[0] : rates[1];
+        }
+    }
+
+    document.getElementById('fixedFee').textContent = `${fixedFee} DT`;
+    document.getElementById('variableFee').textContent = `${variableFee} DT`;
+    document.getElementById('totalFee').textContent = `${fixedFee + variableFee} DT`;
+}
+
+// ========== CALCULATE BRACELETS ==========
 function calculateBracelets() {
-    const adults = parseInt(document.getElementById('adults')?.value) || 0;
-    const children = parseInt(document.getElementById('children')?.value) || 0;
+    const adults = parseInt(document.getElementById('adults').value) || 0;
+    const children = parseInt(document.getElementById('children').value) || 0;
     document.getElementById('bracelets').value = adults + children;
 }
 
-// ===== DATE SETTER =====
-function setCurrentDate() {
-    const now = new Date();
-    const el = document.getElementById('currentDate');
-    if (el) {
-        el.textContent = now.toLocaleDateString('fr-FR', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-        });
+// ========== CLEAR SIGNATURE ==========
+function clearSignature() {
+    const canvas = document.getElementById('signatureCanvas');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 }
 
-// ===== SIGNATURE CANVAS =====
-function initSignaturePad() {
-    const canvas = document.getElementById('signatureCanvas');
-    const ctx = canvas?.getContext('2d');
-    if (!canvas || !ctx) return;
+// ========== VALIDATE FORM ==========
+function validateForm() {
+    let isValid = true;
+    const requiredFields = [
+        'declarantType', 'fullName', 'phone', 'email', 'cin',
+        'block', 'apartmentNumber', 'apartmentType',
+        'tenantName', 'tenantDob', 'nationality', 'idType', 'idNumber',
+        'startDate', 'endDate', 'adults', 'children'
+    ];
 
+    requiredFields.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el || !el.value.trim()) {
+            el.style.borderColor = '#e74c3c';
+            isValid = false;
+        } else {
+            el.style.borderColor = '#d4af37';
+        }
+    });
+
+    const checkboxes = [
+        'regulationKnowledge', 'informationAccuracy', 'feeCommitment', 'acceptTerms'
+    ];
+    checkboxes.forEach(id => {
+        const cb = document.getElementById(id);
+        if (!cb.checked) {
+            cb.parentElement.style.color = '#e74c3c';
+            isValid = false;
+        } else {
+            cb.parentElement.style.color = '';
+        }
+    });
+
+    if (isValid) {
+        document.getElementById('successMessage').style.display = 'block';
+        document.getElementById('FailedMessage').style.display = 'none';
+        document.getElementById('rentalform').reset();
+        clearSignature();
+        setCurrentDate();
+        setDefaultDates();
+        calculateFees();
+        calculateBracelets();
+        document.getElementById('otherTypeContainer').style.display = 'none';
+    } else {
+        document.getElementById('successMessage').style.display = 'none';
+        document.getElementById('FailedMessage').style.display = 'block';
+    }
+}
+
+// ========== RESET FORM ==========
+function resetForm() {
+    const form = document.getElementById('rentalform');
+    form.reset();
+    clearSignature();
+    setCurrentDate();
+    setDefaultDates();
+    calculateFees();
+    calculateBracelets();
+    document.getElementById('otherTypeContainer').style.display = 'none';
+    document.getElementById('successMessage').style.display = 'none';
+    document.getElementById('FailedMessage').style.display = 'none';
+
+    const fields = form.querySelectorAll('input, select');
+    fields.forEach(field => field.style.borderColor = '#d4af37');
+}
+
+// ========== SIGNATURE PAD ==========
+const canvas = document.getElementById('signatureCanvas');
+if (canvas) {
+    const ctx = canvas.getContext('2d');
     let drawing = false, lastX = 0, lastY = 0;
 
     canvas.addEventListener('mousedown', (e) => {
@@ -176,6 +210,7 @@ function initSignaturePad() {
     canvas.addEventListener('mouseup', () => drawing = false);
     canvas.addEventListener('mouseout', () => drawing = false);
 
+    // Touch support
     canvas.addEventListener('touchstart', (e) => {
         drawing = true;
         const touch = e.touches[0];
@@ -197,46 +232,4 @@ function initSignaturePad() {
     }, { passive: false });
 
     canvas.addEventListener('touchend', () => drawing = false);
-}
-
-function clearSignature() {
-    const canvas = document.getElementById('signatureCanvas');
-    const ctx = canvas?.getContext('2d');
-    if (ctx && canvas) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
-}
-
-// ===== FORM VALIDATION =====
-function validateForm() {
-    let isValid = true;
-    const required = [
-        'declarantType', 'fullName', 'phone', 'email', 'cin',
-        'block', 'apartmentNumber', 'apartmentType',
-        'tenantName', 'tenantDob', 'nationality', 'idType', 'idNumber',
-        'startDate', 'endDate', 'adults', 'children'
-    ];
-
-    required.forEach(id => {
-        const el = document.getElementById(id);
-        if (!el || !el.value.trim()) {
-            el.style.borderColor = '#e74c3c';
-            isValid = false;
-        } else {
-            el.style.borderColor = '#d4af37';
-        }
-    });
-
-    const checkboxes = ['regulationKnowledge', 'informationAccuracy', 'feeCommitment', 'acceptTerms'];
-    checkboxes.forEach(id => {
-        const checkbox = document.getElementById(id);
-        if (!checkbox?.checked) {
-            checkbox.parentElement.style.color = '#e74c3c';
-            isValid = false;
-        } else {
-            checkbox.parentElement.style.color = '';
-        }
-    });
-
-    return isValid;
 }
