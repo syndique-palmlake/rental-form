@@ -4,16 +4,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
 
-    // Set current date in French format
-    const formattedDate = today.toLocaleDateString('fr-FR', {
-        day: 'numeric', month: 'long', year: 'numeric'
-    });
-    document.getElementById('currentDate').textContent = formattedDate;
-
     // Set default values for start and end dates
-    document.getElementById('startDate').valueAsDate = today;
-    document.getElementById('endDate').valueAsDate = tomorrow;
-    document.getElementById('startDate').min = today.toISOString().split('T')[0];
+    const startDateEl = document.getElementById('startDate');
+    const endDateEl = document.getElementById('endDate');
+
+    if (startDateEl && endDateEl) {
+        startDateEl.valueAsDate = today;
+        endDateEl.valueAsDate = tomorrow;
+        startDateEl.min = today.toISOString().split('T')[0];
+    }
 
     // Input styling on change
     const inputs = document.querySelectorAll('input, select');
@@ -34,24 +33,34 @@ function setCurrentDate() {
     const now = new Date();
     const options = { day: 'numeric', month: 'long', year: 'numeric' };
     const formattedDate = now.toLocaleDateString('fr-FR', options);
-    document.getElementById('currentDate').textContent = formattedDate;
+
+    const currentDateEl = document.getElementById('currentDate');
+    if (currentDateEl) {
+        currentDateEl.textContent = formattedDate;
+    } else {
+        console.warn('Element with ID "currentDate" not found.');
+    }
 }
 
 // ===== TOGGLE OTHER APARTMENT TYPE FIELD =====
-document.getElementById('apartmentType').addEventListener('change', function () {
+document.getElementById('apartmentType')?.addEventListener('change', function () {
     const otherContainer = document.getElementById('otherTypeContainer');
-    otherContainer.style.display = this.value === 'other' ? 'block' : 'none';
+    if (otherContainer) {
+        otherContainer.style.display = this.value === 'other' ? 'block' : 'none';
+    }
     calculateFees();
 });
 
 // ===== CALCULATE FEES =====
 function calculateFees() {
-    const apartmentType = document.getElementById('apartmentType').value;
-    const startDate = new Date(document.getElementById('startDate').value);
-    const endDate = new Date(document.getElementById('endDate').value);
+    const apartmentType = document.getElementById('apartmentType')?.value;
+    const startDateVal = document.getElementById('startDate')?.value;
+    const endDateVal = document.getElementById('endDate')?.value;
 
-    if (!apartmentType || isNaN(startDate) || isNaN(endDate)) return;
+    if (!apartmentType || !startDateVal || !endDateVal) return;
 
+    const startDate = new Date(startDateVal);
+    const endDate = new Date(endDateVal);
     const nights = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
     const fixedFee = 30;
     let variableFee = 0;
@@ -76,61 +85,67 @@ function calculateFees() {
 
 // ===== CALCULATE TOTAL BRACELETS =====
 function calculateBracelets() {
-    const adults = parseInt(document.getElementById("adults").value) || 0;
-    const children = parseInt(document.getElementById("children").value) || 0;
-    document.getElementById("bracelets").value = adults + children;
+    const adults = parseInt(document.getElementById("adults")?.value) || 0;
+    const children = parseInt(document.getElementById("children")?.value) || 0;
+    const braceletsEl = document.getElementById("bracelets");
+    if (braceletsEl) {
+        braceletsEl.value = adults + children;
+    }
 }
 
 // ===== SIGNATURE PAD HANDLING =====
 const canvas = document.getElementById("signatureCanvas");
-const ctx = canvas.getContext("2d");
+const ctx = canvas?.getContext("2d");
 let drawing = false, lastX = 0, lastY = 0;
 
-canvas.addEventListener("mousedown", (e) => {
-    drawing = true;
-    [lastX, lastY] = [e.offsetX, e.offsetY];
-});
-canvas.addEventListener("mousemove", (e) => {
-    if (!drawing) return;
-    ctx.strokeStyle = '#0c2340';
-    ctx.lineWidth = 2;
-    ctx.lineJoin = 'round';
-    ctx.lineCap = 'round';
-    ctx.beginPath();
-    ctx.moveTo(lastX, lastY);
-    ctx.lineTo(e.offsetX, e.offsetY);
-    ctx.stroke();
-    [lastX, lastY] = [e.offsetX, e.offsetY];
-});
-canvas.addEventListener("mouseup", () => drawing = false);
-canvas.addEventListener("mouseout", () => drawing = false);
-
-canvas.addEventListener("touchstart", (e) => {
-    drawing = true;
-    const touch = e.touches[0];
-    const rect = canvas.getBoundingClientRect();
-    [lastX, lastY] = [touch.clientX - rect.left, touch.clientY - rect.top];
-});
-canvas.addEventListener("touchmove", (e) => {
-    e.preventDefault();
-    if (!drawing) return;
-    const touch = e.touches[0];
-    const rect = canvas.getBoundingClientRect();
-    const x = touch.clientX - rect.left;
-    const y = touch.clientY - rect.top;
-    ctx.lineTo(x, y);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-}, { passive: false });
-canvas.addEventListener("touchend", () => drawing = false);
+if (canvas && ctx) {
+    canvas.addEventListener("mousedown", (e) => {
+        drawing = true;
+        [lastX, lastY] = [e.offsetX, e.offsetY];
+    });
+    canvas.addEventListener("mousemove", (e) => {
+        if (!drawing) return;
+        ctx.strokeStyle = '#0c2340';
+        ctx.lineWidth = 2;
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.stroke();
+        [lastX, lastY] = [e.offsetX, e.offsetY];
+    });
+    canvas.addEventListener("mouseup", () => drawing = false);
+    canvas.addEventListener("mouseout", () => drawing = false);
+    canvas.addEventListener("touchstart", (e) => {
+        drawing = true;
+        const touch = e.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        [lastX, lastY] = [touch.clientX - rect.left, touch.clientY - rect.top];
+    });
+    canvas.addEventListener("touchmove", (e) => {
+        e.preventDefault();
+        if (!drawing) return;
+        const touch = e.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        const x = touch.clientX - rect.left;
+        const y = touch.clientY - rect.top;
+        ctx.lineTo(x, y);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+    }, { passive: false });
+    canvas.addEventListener("touchend", () => drawing = false);
+}
 
 function clearSignature() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (ctx && canvas) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
 }
 
 // ===== FORM VALIDATION & SUBMISSION =====
-document.getElementById('rentalForm').addEventListener('submit', function (e) {
+document.getElementById('rentalForm')?.addEventListener('submit', function (e) {
     e.preventDefault();
     let isValid = true;
 
@@ -142,7 +157,7 @@ document.getElementById('rentalForm').addEventListener('submit', function (e) {
     ];
     requiredFields.forEach(id => {
         const el = document.getElementById(id);
-        if (!el.value.trim()) {
+        if (!el?.value.trim()) {
             el.style.borderColor = '#e74c3c';
             isValid = false;
         } else {
@@ -153,7 +168,7 @@ document.getElementById('rentalForm').addEventListener('submit', function (e) {
     const requiredCheckboxes = ['regulationKnowledge', 'informationAccuracy', 'feeCommitment', 'acceptTerms'];
     requiredCheckboxes.forEach(id => {
         const checkbox = document.getElementById(id);
-        if (!checkbox.checked) {
+        if (!checkbox?.checked) {
             checkbox.parentElement.style.color = '#e74c3c';
             isValid = false;
         } else {
@@ -177,13 +192,16 @@ document.getElementById('rentalForm').addEventListener('submit', function (e) {
 });
 
 // ===== RESET BUTTON HANDLING =====
-document.querySelector('.btn-reset').addEventListener('click', function () {
+document.querySelector('.btn-reset')?.addEventListener('click', function () {
     const form = document.getElementById('rentalForm');
+    if (!form) return;
+
     form.reset();
     clearSignature();
     setCurrentDate();
     calculateFees();
     calculateBracelets();
+
     document.getElementById('otherTypeContainer').style.display = 'none';
     document.getElementById('successMessage').style.display = 'none';
     document.getElementById('FailedMessage').style.display = 'none';
