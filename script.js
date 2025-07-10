@@ -1,57 +1,15 @@
-// ===== INITIAL SETUP ON PAGE LOAD =====
-document.addEventListener('DOMContentLoaded', function () {
-    const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate() + 1);
-
-    // Set current date in French format
-    const formattedDate = today.toLocaleDateString('fr-FR', {
-        day: 'numeric', month: 'long', year: 'numeric'
-    });
-    document.getElementById('currentDate').textContent = formattedDate;
-
-    // Set default values for start and end dates
-    document.getElementById('startDate').valueAsDate = today;
-    document.getElementById('endDate').valueAsDate = tomorrow;
-    document.getElementById('startDate').min = today.toISOString().split('T')[0];
-
-    // Input styling on change
-    const inputs = document.querySelectorAll('input, select');
-    inputs.forEach(input => {
-        input.addEventListener('input', function () {
-            if (this.value) this.style.borderColor = '#d4af37';
-        });
-    });
-
-    // Initial calculations
-    setCurrentDate();
-    calculateFees();
-    calculateBracelets();
-});
-
-// ===== SET CURRENT DATE =====
-function setCurrentDate() {
-    const now = new Date();
-    const options = { day: '2-digit', month: 'long', year: 'numeric' };
-    const formattedDate = now.toLocaleDateString('fr-FR', options);
-    
-    const currentDateEl = document.getElementById('currentDate');
-    if (currentDateEl) {
-        currentDateEl.textContent = formattedDate;
-    } else {
-        console.warn('Element with ID "currentDate" not found.');
-    }
-}
-
-
-// ===== TOGGLE OTHER APARTMENT TYPE FIELD =====
+// ===== SHOW/HIDE OTHER APARTMENT TYPE FIELD =====
 document.getElementById('apartmentType').addEventListener('change', function () {
     const otherContainer = document.getElementById('otherTypeContainer');
-    otherContainer.style.display = this.value === 'other' ? 'block' : 'none';
+    if (this.value === 'other') {
+        otherContainer.style.display = 'block';
+    } else {
+        otherContainer.style.display = 'none';
+    }
     calculateFees();
 });
 
-// ===== CALCULATE FEES =====
+// ===== CALCULATE FEES BASED ON STAY =====
 function calculateFees() {
     const apartmentType = document.getElementById('apartmentType').value;
     const startDate = new Date(document.getElementById('startDate').value);
@@ -70,67 +28,75 @@ function calculateFees() {
             s2: [80, 160],
             s3: [100, 200],
         };
-        const rates = rateTable[apartmentType];
-        if (rates) {
-            variableFee = nights <= 10 ? rates[0] : rates[1];
+        const fees = rateTable[apartmentType];
+        if (fees) {
+            variableFee = nights <= 10 ? fees[0] : fees[1];
         }
     }
 
-    document.getElementById('fixedFee').textContent = `${fixedFee} DT`;
-    document.getElementById('variableFee').textContent = `${variableFee} DT`;
-    document.getElementById('totalFee').textContent = `${fixedFee + variableFee} DT`;
+    document.getElementById('fixedFee').textContent = ${fixedFee} DT;
+    document.getElementById('variableFee').textContent = ${variableFee} DT;
+    document.getElementById('totalFee').textContent = ${fixedFee + variableFee} DT;
 }
 
 // ===== CALCULATE TOTAL BRACELETS =====
-function calculateBracelets() {
+function calculateNigts() {
     const adults = parseInt(document.getElementById("adults").value) || 0;
     const children = parseInt(document.getElementById("children").value) || 0;
-    document.getElementById("bracelets").value = adults + children;
+    const total = adults + children;
+    document.getElementById("bracelets").value = total;
+}
+
+// ===== SET CURRENT DATE =====
+function setCurrentDate() {
+    const now = new Date();
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    const formattedDate = now.toLocaleDateString('fr-FR', options);
+    document.getElementById('currentDate').textContent = formattedDate;
 }
 
 // ===== SIGNATURE PAD HANDLING =====
 const canvas = document.getElementById("signatureCanvas");
 const ctx = canvas.getContext("2d");
-let drawing = false, lastX = 0, lastY = 0;
+let drawing = false;
 
-canvas.addEventListener("mousedown", (e) => {
+canvas.addEventListener("mousedown", () => {
     drawing = true;
-    [lastX, lastY] = [e.offsetX, e.offsetY];
-});
-canvas.addEventListener("mousemove", (e) => {
-    if (!drawing) return;
-    ctx.strokeStyle = '#0c2340';
-    ctx.lineWidth = 2;
-    ctx.lineJoin = 'round';
-    ctx.lineCap = 'round';
     ctx.beginPath();
-    ctx.moveTo(lastX, lastY);
-    ctx.lineTo(e.offsetX, e.offsetY);
-    ctx.stroke();
-    [lastX, lastY] = [e.offsetX, e.offsetY];
 });
-canvas.addEventListener("mouseup", () => drawing = false);
-canvas.addEventListener("mouseout", () => drawing = false);
+canvas.addEventListener("mouseup", () => {
+    drawing = false;
+    ctx.beginPath();
+});
+canvas.addEventListener("mousemove", draw);
 
-canvas.addEventListener("touchstart", (e) => {
+canvas.addEventListener("touchstart", () => {
     drawing = true;
-    const touch = e.touches[0];
-    const rect = canvas.getBoundingClientRect();
-    [lastX, lastY] = [touch.clientX - rect.left, touch.clientY - rect.top];
+    ctx.beginPath();
 });
-canvas.addEventListener("touchmove", (e) => {
-    e.preventDefault();
-    if (!drawing) return;
+canvas.addEventListener("touchend", () => {
+    drawing = false;
+    ctx.beginPath();
+});
+canvas.addEventListener("touchmove", function (e) {
     const touch = e.touches[0];
     const rect = canvas.getBoundingClientRect();
-    const x = touch.clientX - rect.left;
-    const y = touch.clientY - rect.top;
+    draw({ clientX: touch.clientX, clientY: touch.clientY, rect });
+}, { passive: false });
+
+function draw(e) {
+    if (!drawing) return;
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    ctx.lineWidth = 2;
+    ctx.lineCap = "round";
+    ctx.strokeStyle = "#000";
     ctx.lineTo(x, y);
     ctx.stroke();
     ctx.beginPath();
     ctx.moveTo(x, y);
-}, { passive: false });
-canvas.addEventListener("touchend", () => drawing = false);
+}
 
 function clearSignature() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -139,6 +105,7 @@ function clearSignature() {
 // ===== FORM VALIDATION & SUBMISSION =====
 document.getElementById('rentalForm').addEventListener('submit', function (e) {
     e.preventDefault();
+
     let isValid = true;
 
     const requiredFields = [
@@ -147,13 +114,14 @@ document.getElementById('rentalForm').addEventListener('submit', function (e) {
         'tenantName', 'tenantDob', 'nationality', 'idType', 'idNumber',
         'startDate', 'endDate', 'adults', 'children'
     ];
+
     requiredFields.forEach(id => {
         const el = document.getElementById(id);
         if (!el.value.trim()) {
             el.style.borderColor = '#e74c3c';
             isValid = false;
         } else {
-            el.style.borderColor = '#d4af37';
+            el.style.borderColor = '#ddd';
         }
     });
 
@@ -175,7 +143,7 @@ document.getElementById('rentalForm').addEventListener('submit', function (e) {
         clearSignature();
         setCurrentDate();
         calculateFees();
-        calculateBracelets();
+        calculateNigts();
         document.getElementById('otherTypeContainer').style.display = 'none';
     } else {
         document.getElementById('successMessage').style.display = 'none';
@@ -190,11 +158,22 @@ document.querySelector('.btn-reset').addEventListener('click', function () {
     clearSignature();
     setCurrentDate();
     calculateFees();
-    calculateBracelets();
+    calculateNigts();
     document.getElementById('otherTypeContainer').style.display = 'none';
     document.getElementById('successMessage').style.display = 'none';
     document.getElementById('FailedMessage').style.display = 'none';
 
     const fields = form.querySelectorAll('input, select');
-    fields.forEach(field => field.style.borderColor = '#d4af37');
+    fields.forEach(field => field.style.borderColor = '#ddd');
 });
+
+// ===== INITIAL SETUP =====
+const today = new Date();
+const tomorrow = new Date(today);
+tomorrow.setDate(today.getDate() + 1);
+document.getElementById('startDate').valueAsDate = today;
+document.getElementById('endDate').valueAsDate = tomorrow;
+
+setCurrentDate();
+calculateFees();
+calculateNigts();
