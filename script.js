@@ -32,10 +32,17 @@ document.addEventListener('DOMContentLoaded', function () {
 // ===== SET CURRENT DATE =====
 function setCurrentDate() {
     const now = new Date();
-    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    const options = { day: '2-digit', month: 'long', year: 'numeric' };
     const formattedDate = now.toLocaleDateString('fr-FR', options);
-    document.getElementById('currentDate').textContent = formattedDate;
+    
+    const currentDateEl = document.getElementById('currentDate');
+    if (currentDateEl) {
+        currentDateEl.textContent = formattedDate;
+    } else {
+        console.warn('Element with ID "currentDate" not found.');
+    }
 }
+
 
 // ===== TOGGLE OTHER APARTMENT TYPE FIELD =====
 document.getElementById('apartmentType').addEventListener('change', function () {
