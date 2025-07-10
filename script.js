@@ -13,6 +13,21 @@ document.addEventListener('DOMContentLoaded', function () {
         startDateEl.min = today.toISOString().split('T')[0];
     }
 
+    // Attach fee + bracelet calculation triggers
+    document.getElementById('startDate')?.addEventListener('change', calculateFees);
+    document.getElementById('endDate')?.addEventListener('change', calculateFees);
+    document.getElementById('apartmentType')?.addEventListener('change', function () {
+        const otherContainer = document.getElementById('otherTypeContainer');
+        if (otherContainer) {
+            otherContainer.style.display = this.value === 'other' ? 'block' : 'none';
+        }
+        calculateFees();
+    });
+
+    document.getElementById('adults')?.addEventListener('input', calculateBracelets);
+    document.getElementById('children')?.addEventListener('input', calculateBracelets);
+
+    // Style inputs on interaction
     const inputs = document.querySelectorAll('input, select');
     inputs.forEach(input => {
         input.addEventListener('input', function () {
@@ -20,10 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Attach bracelet calculation
-    document.getElementById('adults')?.addEventListener('input', calculateBracelets);
-    document.getElementById('children')?.addEventListener('input', calculateBracelets);
-
+    // Initial state
     setCurrentDate();
     calculateFees();
     calculateBracelets();
@@ -34,49 +46,33 @@ function setCurrentDate() {
     const now = new Date();
     const options = { day: 'numeric', month: 'long', year: 'numeric' };
     const formattedDate = now.toLocaleDateString('fr-FR', options);
-
-    const currentDateEl = document.getElementById('currentDate');
-    if (currentDateEl) {
-        currentDateEl.textContent = formattedDate;
-    } else {
-        console.warn('Element with ID "currentDate" not found.');
-    }
+    document.getElementById('currentDate')!.textContent = formattedDate;
 }
-
-// ===== TOGGLE OTHER APARTMENT TYPE FIELD =====
-document.getElementById('apartmentType')?.addEventListener('change', function () {
-    const otherContainer = document.getElementById('otherTypeContainer');
-    if (otherContainer) {
-        otherContainer.style.display = this.value === 'other' ? 'block' : 'none';
-    }
-    calculateFees();
-});
 
 // ===== CALCULATE FEES =====
 function calculateFees() {
     const apartmentType = document.getElementById('apartmentType')?.value;
-    const startDateVal = document.getElementById('startDate')?.value;
-    const endDateVal = document.getElementById('endDate')?.value;
+    const startDateStr = document.getElementById('startDate')?.value;
+    const endDateStr = document.getElementById('endDate')?.value;
 
-    if (!apartmentType || !startDateVal || !endDateVal) return;
+    if (!apartmentType || !startDateStr || !endDateStr) return;
 
-    const startDate = new Date(startDateVal);
-    const endDate = new Date(endDateVal);
+    const startDate = new Date(startDateStr);
+    const endDate = new Date(endDateStr);
     const nights = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+
     const fixedFee = 30;
     let variableFee = 0;
 
-    if (nights > 0) {
-        const rateTable = {
-            s0: [40, 80],
-            s1: [60, 120],
-            s2: [80, 160],
-            s3: [100, 200],
-        };
-        const rates = rateTable[apartmentType];
-        if (rates) {
-            variableFee = nights <= 10 ? rates[0] : rates[1];
-        }
+    const rateTable = {
+        s0: [40, 80],
+        s1: [60, 120],
+        s2: [80, 160],
+        s3: [100, 200],
+    };
+
+    if (nights > 0 && rateTable[apartmentType]) {
+        variableFee = nights <= 10 ? rateTable[apartmentType][0] : rateTable[apartmentType][1];
     }
 
     document.getElementById('fixedFee').textContent = `${fixedFee} DT`;
