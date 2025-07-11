@@ -1,4 +1,4 @@
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxRem1opsNa6nSuMKtT2X_lGxBwO5ie-IiN50t5enBTQeykbPJBybbO2O5_raf2Z63F/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxZnpV4h3YfXq3nSboOJW6UKVqTV5jOx9g77CE4jK60xJNoqU1o1v1aUR6Ec-38CFtD/exec";
 
 document.addEventListener("DOMContentLoaded", function () {
     const canvas = document.getElementById("signatureCanvas");
