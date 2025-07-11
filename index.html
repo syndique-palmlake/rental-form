@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+
 </head>
 <body>
     <div class="container">
@@ -66,7 +67,6 @@
                         </div>
                     </div>
                 </div>
-                
                 <!-- Section 2: Appartement Concerné -->
                 <div class="form-section">
                     <h2>APPARTEMENT CONCERNÉ</h2>
@@ -85,12 +85,11 @@
                         <div class="form-column">
                             <label for="apartmentType" class="required">Type d'appartement</label>
                             <select id="apartmentType" name="apartmentType" required>
-                                <option value="">Sélectionnez un type</option>
-                                <option value="s0">S+0</option>
-                                <option value="s1">S+1</option>
-                                <option value="s2">S+2</option>
-                                <option value="s3">S+3</option>
-                                <option value="other">Autre</option>
+                            <option value="">Sélectionnez un type</option>
+                            <option value="s1">S+1</option>
+                            <option value="s2">S+2</option>
+                            <option value="s3">S+3</option>
+                            <option value="other">Autre</option>
                             </select>
                         </div>
                         <div class="form-column" id="otherTypeContainer" style="display: none;">
@@ -100,44 +99,60 @@
                     </div>
                 </div>
                 
-                <!-- Section 3: Locataire Principal -->
-                <div class="form-section">
-                    <h2>IDENTITÉ DU LOCATAIRE PRINCIPAL</h2>
-                    <div class="form-group">
-                        <div class="form-column">
-                            <label for="tenantName" class="required">Nom & Prénom</label>
-                            <input type="text" id="tenantName" name="tenantName">
-                        </div>
-                        <div class="form-column">
-                            <label for="tenantDob" class="required">Date de naissance</label>
-                            <input type="date" id="tenantDob" name="tenantDob">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <div class="form-column">
-                            <label for="nationality" class="required">Nationalité</label>
-                            <input type="text" id="nationality" name="nationality">
-                        </div>
-                        <div class="form-column">
-                            <label for="idType" class="required">Type de document d'identité</label>
-                            <select id="idType" name="idType">
-                                <option value="">Sélectionnez un type</option>
-                                <option value="cin">Carte d'identité nationale</option>
-                                <option value="passport">Passeport</option>
-                                <option value="other">Autre</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <div class="form-column">
-                            <label for="idNumber" class="required">N° de document</label>
-                            <input type="text" id="idNumber" name="idNumber">
-                        </div>
-                    </div>
+               <!-- Section 3: Locataires Information -->
+<div class="form-section">
+    <h2>INFORMATIONS DES LOCATAIRES (MAX 6)</h2>
+    
+    <div id="tenantsContainer">
+        <div class="tenant-group" data-tenant="1">
+            <h3>Locataire 1 (Principal)</h3>
+            <div class="form-group">
+                <div class="form-column">
+                    <label for="tenantName1" class="required">Nom & Prénom</label>
+                    <input type="text" id="tenantName1" name="tenantName1">
                 </div>
-                
+                <div class="form-column">
+                    <label for="tenantDob1" class="required">Date de naissance</label>
+                    <input type="date" id="tenantDob1" name="tenantDob1">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="form-column">
+                    <label for="nationality1" class="required">Nationalité</label>
+                    <input type="text" id="nationality1" name="nationality1">
+                </div>
+            </div>
+            <div class="form-group">
+            <div class="form-column">
+                <label for="socialStatus${tenantCount}" class="required">Statut Social</label>
+                <input type="text" id="socialStatus${tenantCount}" name="socialStatus${tenantCount}" list="socialStatusOptions">
+                <datalist id="socialStatusOptions">
+                    <option value="Célibataire">
+                    <option value="Marié(e)">
+                    <option value="Divorcé(e)">
+                    <option value="Veuf/Veuve">
+                    <option value="En concubinage">
+                    <option value="Séparé(e)">
+                </datalist>
+              </div>
+</div>
+            
+            <div class="form-group">
+                <div class="form-column">
+                    <label for="idNumber1" class="required">N° CIN/Passeport</label>
+                    <input type="text" id="idNumber1" name="idNumber1">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Additional tenants will be added here by JavaScript -->
+    </div>
+    
+    <button type="button" class="btn-upload" id="addTenantBtn" style="margin-top: 20px;">
+        <i class="fas fa-user-plus"></i> Ajouter un locataire
+    </button>
+</div>
                 <!-- Section 4: Séjour Information -->
                 <div class="form-section">
                     <h2>INFORMATIONS SUR LE SÉJOUR</h2>
@@ -151,57 +166,93 @@
                             <input type="date" id="endDate" name="endDate">
                         </div>
                     </div>
-                    
-                    <div class="form-group">
-                        <div class="form-column">
-                            <label for="adults" class="required">Nombre total d'occupants adultes</label>
-                            <input type="number" id="adults" name="adults" min="1" value="2" required>
-                        </div>
-                        <div class="form-column">
-                            <label for="children" class="required">Nombre total d'occupants enfants</label>
-                            <input type="number" id="children" name="children" min="0" value="0">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <div class="form-column">
-                            <label for="bracelets">Nombre de bracelets</label>
-                            <input type="number" id="bracelets" name="bracelets" min="0" value="0" readonly>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Section 5: Documents -->
-                <div class="form-section">
-                    <h2>DOCUMENTS À TÉLÉCHARGER</h2>
-                    <div class="form-group">
-                        <div class="form-column">
-                            <label class="required">Copie du CIN ou Passeport des locataires principaux (5 maximum)</label>
-                            <div class="file-upload" onclick="document.getElementById('idFile').click()">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                                <p>Glissez-déposez vos fichiers ici ou cliquez pour parcourir</p>
-                                <button type="button" class="btn-upload"><i class="fas fa-file-upload"></i> Choisir des fichiers</button>
-                                <input type="file" id="idFile" name="idFile" class="file-input" multiple>
+                        <div class="occupants-row">
+                            <div class="occupant-field">
+                                <label for="adults" class="required">Nombre total<br>d'occupants adultes</label>
+                                <input type="number" id="adults" name="adults" min="1" value="3" required>
+                            </div>
+                            <div class="occupant-field">
+                                <label for="children" class="required">Nombre total<br>d'occupants enfants</label>
+                                <input type="number" id="children" name="children" min="0" value="1">
+                            </div>
+                            <div class="occupant-field">
+                                <label for="bracelets">Nombre<br>de bracelets</label>
+                                <input type="number" id="bracelets" name="bracelets" min="0" value="4" readonly>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <div class="form-column">
-                            <label>Copie des passeports des autres locataires (si plus de 5)</label>
-                            <div class="file-upload" onclick="document.getElementById('additionalIdFile').click()">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                                <p>Glissez-déposez vos fichiers ici ou cliquez pour parcourir</p>
-                                <button type="button" class="btn-upload"><i class="fas fa-file-upload"></i> Choisir des fichiers</button>
-                                <input type="file" id="additionalIdFile" name="additionalIdFile" class="file-input" multiple>
-                            </div>
-                        </div>
-                    </div>
+               <!-- Section 5: Documents -->
+<div class="form-section">
+    <h2>DOCUMENTS À TÉLÉCHARGER</h2>
+    
+    <!-- Section for all users -->
+    <div class="form-group">
+        <div class="form-column">
+            <label class="required">Copie du CIN ou Passeport des locataires principaux (5 maximum)</label>
+            <div class="file-upload" onclick="document.getElementById('idFile').click()">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Glissez-déposez vos fichiers ici ou cliquez pour parcourir</p>
+                <button type="button" class="btn-upload"><i class="fas fa-file-upload"></i> Choisir des fichiers</button>
+                <input type="file" id="idFile" name="idFile" class="file-input" multiple required>
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <div class="form-column">
+            <label>Copie des passeports des autres locataires (si plus de 5)</label>
+            <div class="file-upload" onclick="document.getElementById('additionalIdFile').click()">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Glissez-déposez vos fichiers ici ou cliquez pour parcourir</p>
+                <button type="button" class="btn-upload"><i class="fas fa-file-upload"></i> Choisir des fichiers</button>
+                <input type="file" id="additionalIdFile" name="additionalIdFile" class="file-input" multiple>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Section for Propriétaire -->
+    <div id="ownerDocuments" class="document-section">
+        <div class="form-group">
+            <div class="form-column">
+                <label class="required">CIN ou passeport du propriétaire</label>
+                <div class="file-upload" onclick="document.getElementById('ownerId').click()">
+                    <i class="fas fa-id-card"></i>
+                    <p>Télécharger la pièce d'identité du propriétaire</p>
+                    <button type="button" class="btn-upload"><i class="fas fa-file-upload"></i> Choisir un fichier</button>
+                    <input type="file" id="ownerId" name="ownerId" class="file-input">
                 </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Section for Agence/Représentant -->
+    <div id="agencyDocuments" class="document-section" style="display: none;">
+        <h3>Documents requis pour les agences et représentants</h3>
+        <div class="form-group">
+            <div class="form-column">
+                <label class="required">Procuration du propriétaire</label>
+                <div class="file-upload" onclick="document.getElementById('procurationFile').click()">
+                    <i class="fas fa-file-contract"></i>
+                    <p>Télécharger la procuration signée</p>
+                    <button type="button" class="btn-upload"><i class="fas fa-file-upload"></i> Choisir un fichier</button>
+                    <input type="file" id="procurationFile" name="procurationFile" class="file-input">
+                </div>
+            </div>
+            <div class="form-column">
+                <label class="required">CIN ou passeport du représentant</label>
+                <div class="file-upload" onclick="document.getElementById('representativeId').click()">
+                    <i class="fas fa-id-card"></i>
+                    <p>Télécharger la pièce d'identité du représentant</p>
+                    <button type="button" class="btn-upload"><i class="fas fa-file-upload"></i> Choisir un fichier</button>
+                    <input type="file" id="representativeId" name="representativeId" class="file-input">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
                 
                 <!-- Section 6: Procuration -->
                 <div class="form-section">
-                    <h2>PROCURATION</h2>
+                    <h2>PARTIE AGENCE ET INTERMÉDIARE</h2>
                     <div class="form-group">
                         <div class="form-column">
                             <label class="required">Procuration du propriétaire à l'agence ou à l'intermédiaire</label>
@@ -261,36 +312,27 @@
                     </div>
                     
                     <table>
-                        <thead>
-                            <tr>
-                                <th>Type d'appartement</th>
-                                <th>Séjour de 1 à 10 nuitées</th>
-                                <th>Séjour de plus de 10 nuitées</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>S+0</td>
-                                <td>40 DT</td>
-                                <td>80 DT</td>
-                            </tr>
-                            <tr>
-                                <td>S+1</td>
-                                <td>60 DT</td>
-                                <td>120 DT</td>
-                            </tr>
-                            <tr>
-                                <td>S+2</td>
-                                <td>80 DT</td>
-                                <td>160 DT</td>
-                            </tr>
-                            <tr>
-                                <td>S+3</td>
-                                <td>100 DT</td>
-                                <td>200 DT</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <thead>
+                        <tr>
+                            <th>Type d'appartement</th>
+                            <th>Séjour de 1 à 10 nuitées</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>S+1</td>
+                            <td>50 DT</td>
+                        </tr>
+                        <tr>
+                            <td>S+2</td>
+                            <td>80 DT</td>
+                        </tr>
+                        <tr>
+                            <td>S+3</td>
+                            <td>100 DT</td>
+                        </tr>
+                    </tbody>
+                </table>
                 </div>
                 
                 <!-- Section 8: Regulations and Commitments -->
@@ -425,7 +467,18 @@
             <p>Formulaire de déclaration de location - Version Luxe</p>
         </footer>
     </div>
-
+    <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+      const styles = document.createElement('link');
+      styles.rel = 'stylesheet';
+      styles.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+      document.head.appendChild(styles);
+    }, 500);
+  });
+</script>
     <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </body>
 </html>
