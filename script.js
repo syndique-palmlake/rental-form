@@ -153,17 +153,16 @@ function validateForm() {
         }
     });
 
-    if (isValid) {
-        document.getElementById('successMessage').style.display = 'block';
-        document.getElementById('FailedMessage').style.display = 'none';
+if (isValid) {
+    document.getElementById('successMessage').style.display = 'block';
+    document.getElementById('FailedMessage').style.display = 'none';
 
-        setTimeout(() => {
-            document.getElementById('rentalform').submit();
-        }, 500);
-    } else {
-        document.getElementById('successMessage').style.display = 'none';
-        document.getElementById('FailedMessage').style.display = 'block';
-    }
+    sendToGoogleAppsScript();
+} else {
+    document.getElementById('successMessage').style.display = 'none';
+    document.getElementById('FailedMessage').style.display = 'block';
+}
+
      for (let i = 1; i <= tenantCount; i++) {
         requiredFields.push(`socialStatus${i}`);
     }
