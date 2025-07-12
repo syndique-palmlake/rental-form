@@ -286,38 +286,78 @@ input[type="reset"]:active {
 }
 
 /* ===== File Inputs ===== */
-input[type="file"] {
-  display: none;
+/* File Upload Styling */
+.file-upload-wrapper {
+  margin-bottom: 1.5rem;
 }
 
-.file-label {
-  display: inline-block;
-  cursor: pointer;
-  color: #d4af37;
-  font-weight: 600;
-  font-size: 1rem;
+.file-upload-area {
   border: 2px dashed #d4af37;
-  padding: 1rem 1.5rem;
   border-radius: 12px;
+  padding: 2rem;
   text-align: center;
+  cursor: pointer;
   transition: all 0.3s ease;
-  width: 100%;
-  max-width: 320px;
-  user-select: none;
+  background-color: #f9f6ec;
+  position: relative;
+  overflow: hidden;
 }
 
-.file-label:hover {
+.file-upload-area:hover {
   background-color: #fff8d1;
   border-color: #b28c16;
-  box-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
 }
 
-/* Show selected file name */
-.file-name {
-  margin-top: 0.4rem;
-  font-size: 0.9rem;
-  font-style: italic;
+.file-upload-area.dragover {
+  background-color: #e8f4f8;
+  border-color: #007bff;
+}
+
+.file-requirements {
+  display: block;
+  font-size: 0.8rem;
   color: #6c757d;
+  margin-top: 0.5rem;
+}
+
+.file-preview {
+  margin-top: 1rem;
+}
+
+.file-preview-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.file-preview-item .file-info {
+  flex: 1;
+  margin-left: 0.5rem;
+}
+
+.file-preview-item .file-name {
+  font-weight: 500;
+  color: #343a40;
+}
+
+.file-preview-item .file-size {
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.file-preview-item .file-remove {
+  color: #dc3545;
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.file-error {
+  color: #dc3545;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
 }
 
 /* ===== Checkbox and Radio Styling ===== */
