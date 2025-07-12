@@ -124,24 +124,24 @@ function validateForm() {
     const requiredFields = [
         'declarantType', 'fullName', 'phone', 'email', 'cin',
         'block', 'apartmentNumber', 'apartmentType',
-        'startDate', 'endDate', 'adults', 'children'
+        'startDate', 'endDate', 'adults', 'children',
+        'tenantName1', 'tenantDob1', 'nationality1', 'idNumber1'
     ];
     
-    // Add tenant fields to required fields
-    for (let i = 1; i <= tenantCount; i++) {
-        requiredFields.push(`tenantName${i}`, `tenantDob${i}`, `nationality${i}`, `relationship${i}`, `idNumber${i}`);
-    }
-
+    // Check all required fields
     requiredFields.forEach(id => {
         const el = document.getElementById(id);
-        if (!el || (el.type !== 'number' && !el.value.trim()) || (el.type === 'number' && isNaN(el.value))) {
-            if (el) el.style.borderColor = '#e74c3c';
-            isValid = false;
+        if (!el || (el.type !== 'number' && !el.value.trim()) || (el.type === 'number' && isNaN(parseInt(el.value)))) {
+            if (el) {
+                el.style.borderColor = '#e74c3c';
+                isValid = false;
+            }
         } else {
-            el.style.borderColor = '#d4af37';
+            if (el) el.style.borderColor = '#d4af37';
         }
     });
 
+    // Check checkboxes
     const checkboxes = ['regulationKnowledge', 'informationAccuracy', 'feeCommitment', 'acceptTerms'];
     checkboxes.forEach(id => {
         const cb = document.getElementById(id);
@@ -149,23 +149,24 @@ function validateForm() {
             if (cb && cb.parentElement) cb.parentElement.style.color = '#e74c3c';
             isValid = false;
         } else {
-            cb.parentElement.style.color = '';
+            if (cb && cb.parentElement) cb.parentElement.style.color = '';
         }
     });
 
-if (isValid) {
-    document.getElementById('successMessage').style.display = 'block';
-    document.getElementById('FailedMessage').style.display = 'none';
-
-    sendToGoogleAppsScript();
-} else {
-    document.getElementById('successMessage').style.display = 'none';
-    document.getElementById('FailedMessage').style.display = 'block';
-}
-
-     for (let i = 1; i <= tenantCount; i++) {
-        requiredFields.push(`socialStatus${i}`);
+    // Show appropriate message
+    if (isValid) {
+        document.getElementById('successMessage').style.display = 'block';
+        document.getElementById('FailedMessage').style.display = 'none';
+        submitAll(); // Call submit function if valid
+    } else {
+        document.getElementById('successMessage').style.display = 'none';
+        document.getElementById('FailedMessage').style.display = 'block';
+        // Scroll to first error
+        const firstError = document.querySelector('[style*="border-color: #e74c3c"], [style*="color: #e74c3c"]');
+        if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
+    
+    return isValid;
 }
 
 // ===== RESET FORM =====
