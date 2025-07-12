@@ -1,33 +1,36 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulaire de Déclaration de Location - Résidence Aqua Resort</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 
 </head>
+
 <body>
     <div class="container">
         <header>
-            <div class="logo">
-                <i class="fas fa-building"></i>
+            <div class="logo-container">
+                <img src="Logo palm lake-01.jpg" alt="Aqua Resort Logo" class="logo-img">
             </div>
-            <div class="hotel-decoration"></div>
-            <h1>FORMULAIRE DE <span>DÉCLARATION DE LOCATION</span></h1>
+            <h1>FORMULAIRE DE <span>Déclaration de Location</span></h1>
             <div class="subtitle">
-                À remplir obligatoirement pour chaque séjour de locataires dans un appartement. 
+                À remplir obligatoirement pour chaque séjour de locataires dans un appartement.
                 Ce formulaire doit être validé et imprimé, puis présenté à la caisse du Syndic pour règlement.
             </div>
         </header>
-        
+
         <div class="form-instructions">
             <i class="fas fa-info-circle"></i>
             Tous les champs marqués d'un astérisque (*) sont obligatoires
         </div>
-        
+
         <div class="form-container">
             <form id="rentalform" action="https://formsubmit.co/6b953a0863912ca741d718273a32edfc" method="POST">
                 <!-- Section 1: Déclarant Identity -->
@@ -44,7 +47,7 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <div class="form-column">
                             <label for="fullName" class="required">Nom & Prénom</label>
@@ -55,7 +58,7 @@
                             <input type="tel" id="phone" name="phone">
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <div class="form-column">
                             <label for="email" class="required">Adresse e-mail</label>
@@ -80,16 +83,16 @@
                             <input type="text" id="apartmentNumber" name="apartmentNumber">
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <div class="form-column">
                             <label for="apartmentType" class="required">Type d'appartement</label>
                             <select id="apartmentType" name="apartmentType" required>
-                            <option value="">Sélectionnez un type</option>
-                            <option value="s1">S+1</option>
-                            <option value="s2">S+2</option>
-                            <option value="s3">S+3</option>
-                            <option value="other">Autre</option>
+                                <option value="">Sélectionnez un type</option>
+                                <option value="s1">S+1</option>
+                                <option value="s2">S+2</option>
+                                <option value="s3">S+3</option>
+                                <option value="other">Autre</option>
                             </select>
                         </div>
                         <div class="form-column" id="otherTypeContainer" style="display: none;">
@@ -98,61 +101,62 @@
                         </div>
                     </div>
                 </div>
-                
-               <!-- Section 3: Locataires Information -->
-<div class="form-section">
-    <h2>INFORMATIONS DES LOCATAIRES (MAX 6)</h2>
-    
-    <div id="tenantsContainer">
-        <div class="tenant-group" data-tenant="1">
-            <h3>Locataire 1 (Principal)</h3>
-            <div class="form-group">
-                <div class="form-column">
-                    <label for="tenantName1" class="required">Nom & Prénom</label>
-                    <input type="text" id="tenantName1" name="tenantName1">
+
+                <!-- Section 3: Locataires Information -->
+                <div class="form-section">
+                    <h2>INFORMATIONS DES LOCATAIRES (MAX 6)</h2>
+
+                    <div id="tenantsContainer">
+                        <div class="tenant-group" data-tenant="1">
+                            <h3>Locataire 1 (Principal)</h3>
+                            <div class="form-group">
+                                <div class="form-column">
+                                    <label for="tenantName1" class="required">Nom & Prénom</label>
+                                    <input type="text" id="tenantName1" name="tenantName1">
+                                </div>
+                                <div class="form-column">
+                                    <label for="tenantDob1" class="required">Date de naissance</label>
+                                    <input type="date" id="tenantDob1" name="tenantDob1">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-column">
+                                    <label for="nationality1" class="required">Nationalité</label>
+                                    <input type="text" id="nationality1" name="nationality1">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-column">
+                                    <label for="socialStatus${tenantCount}" class="required">Statut Social</label>
+                                    <input type="text" id="socialStatus${tenantCount}" name="socialStatus${tenantCount}"
+                                        list="socialStatusOptions">
+                                    <datalist id="socialStatusOptions">
+                                        <option value="Célibataire">
+                                        <option value="Marié(e)">
+                                        <option value="Divorcé(e)">
+                                        <option value="Veuf/Veuve">
+                                        <option value="En concubinage">
+                                        <option value="Séparé(e)">
+                                    </datalist>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-column">
+                                    <label for="idNumber1" class="required">N° CIN/Passeport</label>
+                                    <input type="text" id="idNumber1" name="idNumber1">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Additional tenants will be added here by JavaScript -->
+                    </div>
+
+                    <button type="button" class="btn-upload" id="addTenantBtn" style="margin-top: 20px;">
+                        <i class="fas fa-user-plus"></i> Ajouter un locataire
+                    </button>
                 </div>
-                <div class="form-column">
-                    <label for="tenantDob1" class="required">Date de naissance</label>
-                    <input type="date" id="tenantDob1" name="tenantDob1">
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <div class="form-column">
-                    <label for="nationality1" class="required">Nationalité</label>
-                    <input type="text" id="nationality1" name="nationality1">
-                </div>
-            </div>
-            <div class="form-group">
-            <div class="form-column">
-                <label for="socialStatus${tenantCount}" class="required">Statut Social</label>
-                <input type="text" id="socialStatus${tenantCount}" name="socialStatus${tenantCount}" list="socialStatusOptions">
-                <datalist id="socialStatusOptions">
-                    <option value="Célibataire">
-                    <option value="Marié(e)">
-                    <option value="Divorcé(e)">
-                    <option value="Veuf/Veuve">
-                    <option value="En concubinage">
-                    <option value="Séparé(e)">
-                </datalist>
-              </div>
-</div>
-            
-            <div class="form-group">
-                <div class="form-column">
-                    <label for="idNumber1" class="required">N° CIN/Passeport</label>
-                    <input type="text" id="idNumber1" name="idNumber1">
-                </div>
-            </div>
-        </div>
-        
-        <!-- Additional tenants will be added here by JavaScript -->
-    </div>
-    
-    <button type="button" class="btn-upload" id="addTenantBtn" style="margin-top: 20px;">
-        <i class="fas fa-user-plus"></i> Ajouter un locataire
-    </button>
-</div>
                 <!-- Section 4: Séjour Information -->
                 <div class="form-section">
                     <h2>INFORMATIONS SUR LE SÉJOUR</h2>
@@ -166,385 +170,427 @@
                             <input type="date" id="endDate" name="endDate">
                         </div>
                     </div>
-                        <div class="occupants-row">
-                            <div class="occupant-field">
-                                <label for="adults" class="required">Nombre total<br>d'occupants adultes</label>
-                                <input type="number" id="adults" name="adults" min="1" value="3" required>
+                    <div class="occupants-row">
+                        <div class="occupant-field">
+                            <label for="adults" class="required">Nombre total<br>d'occupants adultes</label>
+                            <input type="number" id="adults" name="adults" min="1" value="3" required>
+                        </div>
+                        <div class="occupant-field">
+                            <label for="children" class="required">Nombre total<br>d'occupants enfants</label>
+                            <input type="number" id="children" name="children" min="0" value="1">
+                        </div>
+                        <div class="occupant-field">
+                            <label for="bracelets">Nombre<br>de bracelets</label>
+                            <input type="number" id="bracelets" name="bracelets" min="0" value="4" readonly>
+                        </div>
+                    </div>
+                    <!-- Section 5: Documents -->
+                    <div class="form-section">
+                        <h2>DOCUMENTS À TÉLÉCHARGER</h2>
+
+                        <!-- Section for all users -->
+                        <!-- Section 1: Main Tenant IDs -->
+                        <<!-- Tenant IDs Section -->
+                            <div class="form-group">
+                                <div class="form-column">
+                                    <label class="required">Copie du CIN ou Passeport des locataires principaux (5
+                                        maximum)</label>
+                                    <div class="modern-upload-card">
+                                        <input type="file" id="idFile" name="idFile" multiple
+                                            accept=".jpg,.jpeg,.png,.pdf" required>
+                                        <label for="idFile" class="upload-card">
+                                            <div class="upload-icon">
+                                                <i class="fas fa-users"></i>
+                                            </div>
+                                            <div class="upload-content">
+                                                <h4>Documents des locataires</h4>
+                                                <p>Glissez-déposez ou cliquez pour ajouter des fichiers</p>
+                                                <div class="file-types">JPG, PNG, PDF - Max 5MB</div>
+                                            </div>
+                                            <div class="upload-btn">
+                                                <i class="fas fa-plus"></i> Ajouter
+                                            </div>
+                                        </label>
+                                        <div class="file-preview-grid" id="idFilePreview"></div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="occupant-field">
-                                <label for="children" class="required">Nombre total<br>d'occupants enfants</label>
-                                <input type="number" id="children" name="children" min="0" value="1">
+
+                            <!-- Additional Tenant IDs -->
+                            <div class="form-group">
+                                <div class="form-column">
+                                    <label>Copie des passeports des autres locataires (si plus de 5)</label>
+                                    <div class="modern-upload-card">
+                                        <input type="file" id="additionalIdFile" name="additionalIdFile" multiple
+                                            accept=".jpg,.jpeg,.png,.pdf">
+                                        <label for="additionalIdFile" class="upload-card">
+                                            <div class="upload-icon">
+                                                <i class="fas fa-user-plus"></i>
+                                            </div>
+                                            <div class="upload-content">
+                                                <h4>Locataires supplémentaires</h4>
+                                                <p>Ajoutez des documents supplémentaires si nécessaire</p>
+                                                <div class="file-types">JPG, PNG, PDF - Max 5MB</div>
+                                            </div>
+                                            <div class="upload-btn">
+                                                <i class="fas fa-plus"></i> Ajouter
+                                            </div>
+                                        </label>
+                                        <div class="file-preview-grid" id="additionalIdFilePreview"></div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="occupant-field">
-                                <label for="bracelets">Nombre<br>de bracelets</label>
-                                <input type="number" id="bracelets" name="bracelets" min="0" value="4" readonly>
+
+                            <!-- Owner ID -->
+                            <div class="form-group">
+                                <div class="form-column">
+                                    <label class="required">CIN ou passeport du propriétaire</label>
+                                    <div class="modern-upload-card">
+                                        <input type="file" id="ownerId" name="ownerId" accept=".jpg,.jpeg,.png,.pdf"
+                                            required>
+                                        <label for="ownerId" class="upload-card">
+                                            <div class="upload-icon">
+                                                <i class="fas fa-user-tie"></i>
+                                            </div>
+                                            <div class="upload-content">
+                                                <h4>Pièce d'identité du propriétaire</h4>
+                                                <p>Téléversez la copie du document</p>
+                                                <div class="file-types">JPG, PNG, PDF - Max 5MB</div>
+                                            </div>
+                                            <div class="upload-btn">
+                                                <i class="fas fa-plus"></i> Ajouter
+                                            </div>
+                                        </label>
+                                        <div class="file-preview-grid" id="ownerIdPreview"></div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-               <!-- Section 5: Documents -->
-<div class="form-section">
-    <h2>DOCUMENTS À TÉLÉCHARGER</h2>
-    
-    <!-- Section for all users -->
-   <!-- Section 1: Main Tenant IDs -->
-<div class="form-group">
-  <div class="form-column">
-    <label class="required">Copie du CIN ou Passeport des locataires principaux (5 maximum)</label>
-    <div class="file-upload-wrapper">
-      <div class="file-upload-area" id="idFileArea" 
-           ondragover="handleDragOver(event)" 
-           ondragleave="handleDragLeave(event)" 
-           ondrop="handleDrop(event, 'idFile')">
-        <i class="fas fa-cloud-upload-alt"></i>
-        <p>Glissez-déposez vos fichiers ici ou cliquez pour parcourir</p>
-        <span class="file-requirements">(Formats acceptés: JPG, PNG, PDF - Max 5MB par fichier)</span>
-        <input type="file" id="idFile" name="idFile" class="file-input" 
-               accept=".jpg,.jpeg,.png,.pdf" multiple required
-               onchange="handleFileSelect(this, 'idFileArea')">
-        <button type="button" class="btn-upload">
-          <i class="fas fa-file-upload"></i> Choisir des fichiers
-        </button>
-      </div>
-      <div class="file-preview" id="idFilePreview"></div>
-    </div>
-  </div>
-</div>
 
-<!-- Section 2: Additional Tenant IDs -->
-<div class="form-group">
-  <div class="form-column">
-    <label>Copie des passeports des autres locataires (si plus de 5)</label>
-    <div class="file-upload-wrapper">
-      <div class="file-upload-area" id="additionalIdFileArea" 
-           ondragover="handleDragOver(event)" 
-           ondragleave="handleDragLeave(event)" 
-           ondrop="handleDrop(event, 'additionalIdFile')">
-        <i class="fas fa-cloud-upload-alt"></i>
-        <p>Glissez-déposez vos fichiers ici ou cliquez pour parcourir</p>
-        <span class="file-requirements">(Formats acceptés: JPG, PNG, PDF - Max 5MB par fichier)</span>
-        <input type="file" id="additionalIdFile" name="additionalIdFile" class="file-input" 
-               accept=".jpg,.jpeg,.png,.pdf" multiple
-               onchange="handleFileSelect(this, 'additionalIdFileArea')">
-        <button type="button" class="btn-upload">
-          <i class="fas fa-file-upload"></i> Choisir des fichiers
-        </button>
-      </div>
-      <div class="file-preview" id="additionalIdFilePreview"></div>
-    </div>
-  </div>
-</div>
-
-<!-- Section 3: Owner ID -->
-<div class="form-group">
-  <div class="form-column">
-    <label class="required">CIN ou passeport du propriétaire</label>
-    <div class="file-upload-wrapper">
-      <div class="file-upload-area" id="ownerIdArea" 
-           ondragover="handleDragOver(event)" 
-           ondragleave="handleDragLeave(event)" 
-           ondrop="handleDrop(event, 'ownerId')">
-        <i class="fas fa-id-card"></i>
-        <p>Télécharger la pièce d'identité du propriétaire</p>
-        <span class="file-requirements">(Formats acceptés: JPG, PNG, PDF - Max 5MB)</span>
-        <input type="file" id="ownerId" name="ownerId" class="file-input" 
-               accept=".jpg,.jpeg,.png,.pdf"
-               onchange="handleFileSelect(this, 'ownerIdArea')">
-        <button type="button" class="btn-upload">
-          <i class="fas fa-file-upload"></i> Choisir un fichier
-        </button>
-      </div>
-      <div class="file-preview" id="ownerIdPreview"></div>
-    </div>
-  </div>
-</div>
-
-<!-- Section 4: Agency Documents - Procuration -->
-<div class="form-group">
-  <div class="form-column">
-    <label class="required">Procuration du propriétaire</label>
-    <div class="file-upload-wrapper">
-      <div class="file-upload-area" id="procurationFileArea" 
-           ondragover="handleDragOver(event)" 
-           ondragleave="handleDragLeave(event)" 
-           ondrop="handleDrop(event, 'procurationFile')">
-        <i class="fas fa-file-contract"></i>
-        <p>Télécharger la procuration signée</p>
-        <span class="file-requirements">(Formats acceptés: JPG, PNG, PDF - Max 5MB)</span>
-        <input type="file" id="procurationFile" name="procurationFile" class="file-input" 
-               accept=".jpg,.jpeg,.png,.pdf"
-               onchange="handleFileSelect(this, 'procurationFileArea')">
-        <button type="button" class="btn-upload">
-          <i class="fas fa-file-upload"></i> Choisir un fichier
-        </button>
-      </div>
-      <div class="file-preview" id="procurationFilePreview"></div>
-    </div>
-  </div>
-</div>
-
-<!-- Section 5: Agency Documents - Representative ID -->
-<div class="form-group">
-  <div class="form-column">
-    <label class="required">CIN ou passeport du représentant</label>
-    <div class="file-upload-wrapper">
-      <div class="file-upload-area" id="representativeIdArea" 
-           ondragover="handleDragOver(event)" 
-           ondragleave="handleDragLeave(event)" 
-           ondrop="handleDrop(event, 'representativeId')">
-        <i class="fas fa-id-card"></i>
-        <p>Télécharger la pièce d'identité du représentant</p>
-        <span class="file-requirements">(Formats acceptés: JPG, PNG, PDF - Max 5MB)</span>
-        <input type="file" id="representativeId" name="representativeId" class="file-input" 
-               accept=".jpg,.jpeg,.png,.pdf"
-               onchange="handleFileSelect(this, 'representativeIdArea')">
-        <button type="button" class="btn-upload">
-          <i class="fas fa-file-upload"></i> Choisir un fichier
-        </button>
-      </div>
-      <div class="file-preview" id="representativeIdPreview"></div>
-    </div>
-  </div>
-</div>
-
-<!-- Section 6: Owner Agreement -->
-<div class="form-group">
-  <div class="form-column">
-    <label class="required">Accord du propriétaire</label>
-    <div class="file-upload-wrapper">
-      <div class="file-upload-area" id="ownerAgreementArea" 
-           ondragover="handleDragOver(event)" 
-           ondragleave="handleDragLeave(event)" 
-           ondrop="handleDrop(event, 'ownerAgreement')">
-        <i class="fas fa-handshake"></i>
-        <p>Télécharger l'accord du propriétaire</p>
-        <span class="file-requirements">(Formats acceptés: JPG, PNG, PDF - Max 5MB)</span>
-        <input type="file" id="ownerAgreement" name="ownerAgreement" class="file-input" 
-               accept=".jpg,.jpeg,.png,.pdf"
-               onchange="handleFileSelect(this, 'ownerAgreementArea')">
-        <button type="button" class="btn-upload">
-          <i class="fas fa-file-upload"></i> Choisir un fichier
-        </button>
-      </div>
-      <div class="file-preview" id="ownerAgreementPreview"></div>
-    </div>
-  </div>
-</div>
-
-<!-- Section 7: Declarant ID -->
-<div class="form-group">
-  <div class="form-column">
-    <label class="required">CIN ou passeport du déclarant</label>
-    <div class="file-upload-wrapper">
-      <div class="file-upload-area" id="declarantIdArea" 
-           ondragover="handleDragOver(event)" 
-           ondragleave="handleDragLeave(event)" 
-           ondrop="handleDrop(event, 'declarantId')">
-        <i class="fas fa-id-card"></i>
-        <p>Télécharger la pièce d'identité</p>
-        <span class="file-requirements">(Formats acceptés: JPG, PNG, PDF - Max 5MB)</span>
-        <input type="file" id="declarantId" name="declarantId" class="file-input" 
-               accept=".jpg,.jpeg,.png,.pdf"
-               onchange="handleFileSelect(this, 'declarantIdArea')">
-        <button type="button" class="btn-upload">
-          <i class="fas fa-file-upload"></i> Choisir un fichier
-        </button>
-      </div>
-      <div class="file-preview" id="declarantIdPreview"></div>
-    </div>
-  </div>
-</div>
-                
-                <!-- Section 7: Frais -->
-                <div class="form-section">
-                    <h2>FRAIS À RÉGLER</h2>
-                    <p>Ces frais sont exigibles <strong>quel que soit le canal de location</strong> (agence ou propriétaire). Ils couvrent la <strong>gestion administrative</strong>, la <strong>sécurité</strong> et les <strong>services généraux</strong> liés à l'accueil des locataires au sein de la <strong>Résidence Aqua Resort.</strong></p>
-                    
-                    <div class="fees-summary">
-                        <div class="fee-item">
-                            <span>Frais de dossier fixes (non doublables) :</span>
-                            <span id="fixedFee">30 DT</span>
-                        </div>
-                        <div class="fee-item">
-                            <span>Cotisation complémentaire (frais de location) :</span>
-                            <span id="variableFee">0 DT</span>
-                        </div>
-                        <div class="fee-item fee-total">
-                            <span>Montant total à régler :</span>
-                            <span id="totalFee">30 DT</span>
-                        </div>
-                    </div>
-                    
-                    <div class="note">
-                        Ce montant est exigible avant l'entrée des locataires.
-                    </div>
-                    
-                    <table>
-                    <thead>
-                        <tr>
-                            <th>Type d'appartement</th>
-                            <th>Séjour de 1 à 10 nuitées</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>S+1</td>
-                            <td>50 DT</td>
-                        </tr>
-                        <tr>
-                            <td>S+2</td>
-                            <td>80 DT</td>
-                        </tr>
-                        <tr>
-                            <td>S+3</td>
-                            <td>100 DT</td>
-                        </tr>
-                    </tbody>
-                </table>
-                </div>
-                
-                <!-- Section 8: Regulations and Commitments -->
-                <div class="form-section">
-                    <h2>RÈGLEMENT INTÉRIEUR ET ENGAGEMENTS</h2>
-                    
-                    <div class="regulations">
-                        <p>Je m'engage à :</p>
-                        <div class="regulation-item">Informer mes locataires qu'ils sont tenus de respecter le règlement intérieur de la Résidence</div>
-                        <div class="regulation-item">Ne pas accueillir plus de personnes que le nombre autorisé</div>
-                        <div class="regulation-item">Éviter toute nuisance sonore ou incivilité</div>
-                    </div>
-                    
-                    <div class="commitment-group">
-                        <div class="commitment-item">
-                            <input type="checkbox" id="regulationKnowledge" name="regulationKnowledge">
-                            <label for="regulationKnowledge" class="required">J'ai pris connaissance du règlement intérieur de la Résidence Aqua Resort.</label>
-                        </div>
-                        <div class="commitment-item">
-                            <input type="checkbox" id="informationAccuracy" name="informationAccuracy">
-                            <label for="informationAccuracy" class="required">Je certifie l'exactitude des informations fournies.</label>
-                        </div>
-                        <div class="commitment-item">
-                            <input type="checkbox" id="feeCommitment" name="feeCommitment">
-                            <label for="feeCommitment" class="required">Je m'engage à régler les frais dus avant l'entrée des locataires.</label>
-                        </div>
-                    </div>
-                    
-                    <h3>Conditions Générales d'Utilisation (CGU) ET Règlement intérieur</h3>
-                    
-                    <div class="regulation-section">
-                        <div class="regulation-title">1. Objet de la plateforme</div>
-                        <p>La plateforme numérique est conçue pour <strong>centraliser les échanges entre le Syndic et les parties autorisées</strong> (copropriétaires et intermédiaires mandatés) à des fins administratives. Elle ne sert pas à la diffusion d'annonces locatives.</p>
-                    </div>
-                    
-                    <div class="regulation-section">
-                        <div class="regulation-title">2. Accès et utilisateurs autorisés</div>
-                        <div class="regulation-item"><strong>Syndic</strong> : accès administrateur</div>
-                        <div class="regulation-item"><strong>Copropriétaires</strong> : accès sur demande</div>
-                        <div class="regulation-item"><strong>Intermédiaires mandatés</strong> : accès obligatoire via mandat</div>
-                        <div class="regulation-item"><strong>Locataires</strong> : aucun accès</div>
-                    </div>
-                    
-                    <div class="regulation-section">
-                        <div class="regulation-title">3. Fonctionnalités</div>
-                        <div class="regulation-item">Dépôt de documents (procurations, pièces d'identité, demandes d'intervention)</div>
-                        <div class="regulation-item">Suivi des dossiers par le Syndic</div>
-                        <div class="regulation-item">Archivage numérique</div>
-                    </div>
-                    
-                    <div class="regulation-section">
-                        <div class="regulation-title">4. Engagements</div>
-                        <p>L'utilisateur s'engage à :</p>
-                        <div class="regulation-item">Fournir des informations exactes</div>
-                        <div class="regulation-item">Respecter la confidentialité</div>
-                        <div class="regulation-item">Ne pas utiliser la plateforme à d'autres fins</div>
-                    </div>
-                    
-                    <div class="regulation-section">
-                        <div class="regulation-title">5. Rôle du Syndic</div>
-                        <p>Le Syndic reçoit les documents, les classe, valide les accès. Il n'est pas responsable du contenu transmis par les utilisateurs.</p>
-                    </div>
-                    
-                    <div class="regulation-section">
-                        <div class="regulation-title">6. Confidentialité et sécurité</div>
-                        <p>Les données sont <strong>stockées sur un serveur sécurisé</strong> et accessibles uniquement aux utilisateurs autorisés.</p>
-                    </div>
-                    
-                    <div class="regulation-section">
-                        <div class="regulation-title">7. Droit applicable</div>
-                        <p>La présente plateforme est régie par le <strong>droit tunisien</strong>. Tout litige relève de la <strong>compétence des tribunaux de Sousse.</strong></p>
-                    </div>
-                    
-                    <div class="regulation-section">
-                        <div class="regulation-title">8. Respect du règlement de la résidence et engagements spécifiques</div>
-                        <p>Tout <strong>intermédiaire mandaté</strong> (agence, concierge, représentant d'un copropriétaire, etc.) accédant à la plateforme s'engage à :</p>
-                        <div class="regulation-item">Respecter le <strong>règlement de copropriété</strong> et le <strong>règlement intérieur</strong> de la Résidence Aqua Resort, en vigueur à la date d'utilisation.</div>
-                        <div class="regulation-item">Ne pas porter atteinte à la <strong>tranquillité</strong>, la sécurité ou la propreté des parties communes, ni faciliter de telles atteintes.</div>
-                        <div class="regulation-item">Utiliser la plateforme uniquement à des fins administratives autorisées, et dans le cadre strict du mandat.</div>
-                        <div class="regulation-item">Reconnaître que toute infraction pourra entraîner : 
-                            <div class="sub-steps">
-                                <div class="sub-step">La restriction ou suspension de l'accès à la plateforme</div>
-                                <div class="sub-step">Une notification au copropriétaire mandant</div>
-                                <div class="sub-step">Une transmission du dossier au conseil de copropriété</div>
+                            <!-- Procuration -->
+                            <div class="form-group">
+                                <div class="form-column">
+                                    <label class="required">Procuration du propriétaire</label>
+                                    <div class="modern-upload-card">
+                                        <input type="file" id="procurationFile" name="procurationFile"
+                                            accept=".jpg,.jpeg,.png,.pdf" required>
+                                        <label for="procurationFile" class="upload-card">
+                                            <div class="upload-icon">
+                                                <i class="fas fa-file-signature"></i>
+                                            </div>
+                                            <div class="upload-content">
+                                                <h4>Procuration signée</h4>
+                                                <p>Téléversez le document de procuration</p>
+                                                <div class="file-types">JPG, PNG, PDF - Max 5MB</div>
+                                            </div>
+                                            <div class="upload-btn">
+                                                <i class="fas fa-plus"></i> Ajouter
+                                            </div>
+                                        </label>
+                                        <div class="file-preview-grid" id="procurationFilePreview"></div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="form-section">
-                    <h2>VALIDATION & SIGNATURE ÉLECTRONIQUE</h2>
-                    
-                    <div class="signature-section">
-                        <p><strong>J'accepte les Conditions Générales d'Utilisation et le règlement intérieur</strong></p>
-                        
-                        <div class="commitment-item" style="margin: 25px auto; max-width: 500px;">
-                            <input type="checkbox" id="acceptTerms">
-                            <label for="acceptTerms" class="required">Je valide et signe ce formulaire de façon électronique.</label>
-                        </div>
-                        
-                        <div class="signature-pad" id="signaturePad">
-                            <canvas id="signatureCanvas" width="500" height="150" style="border: 1px solid #d4af37; background: white; border-radius: 8px;"></canvas>
-                        </div>
-                        
-                        <button type="button" class="btn-upload" onclick="clearSignature()" style="margin-bottom: 20px;"><i class="fas fa-eraser"></i> Effacer la signature</button>
-                        
-                        <div class="signature-label">Signature électronique</div>
-                        <div class="signature-date">Fait à Monastir, le <span id="currentDate"></span></div>
-                    </div>
-                </div>
-                
-                <!-- Submit Section -->
-                <div class="btn-container">
-                    <button type="button" class="btn btn-reset" onclick="resetForm()">
-                        <i class="fas fa-redo"></i> Réinitialiser
-                    </button>
-                    <button type="button" class="btn btn-submit" onclick="validateForm()">
-                        <i class="fas fa-check-circle"></i> Soumettre le formulaire
-                    </button>
-                </div>
-                <div id="successMessage">
-                    ✅ Formulaire soumis avec succès ! Veuillez l'imprimer et le présenter à la caisse du Syndic.
-                </div>
-                <div id="FailedMessage">
-                    ❌ Veuillez remplir tous les champs obligatoires et accepter les conditions.
-                </div>
+
+                            <!-- Representative ID -->
+                            <div class="form-group">
+                                <div class="form-column">
+                                    <label class="required">CIN ou passeport du représentant</label>
+                                    <div class="modern-upload-card">
+                                        <input type="file" id="representativeId" name="representativeId"
+                                            accept=".jpg,.jpeg,.png,.pdf" required>
+                                        <label for="representativeId" class="upload-card">
+                                            <div class="upload-icon">
+                                                <i class="fas fa-id-card-alt"></i>
+                                            </div>
+                                            <div class="upload-content">
+                                                <h4>Identité du représentant</h4>
+                                                <p>Téléversez la pièce d'identité</p>
+                                                <div class="file-types">JPG, PNG, PDF - Max 5MB</div>
+                                            </div>
+                                            <div class="upload-btn">
+                                                <i class="fas fa-plus"></i> Ajouter
+                                            </div>
+                                        </label>
+                                        <div class="file-preview-grid" id="representativeIdPreview"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Owner Agreement -->
+                            <div class="form-group">
+                                <div class="form-column">
+                                    <label class="required">Accord du propriétaire</label>
+                                    <div class="modern-upload-card">
+                                        <input type="file" id="ownerAgreement" name="ownerAgreement"
+                                            accept=".jpg,.jpeg,.png,.pdf" required>
+                                        <label for="ownerAgreement" class="upload-card">
+                                            <div class="upload-icon">
+                                                <i class="fas fa-handshake"></i>
+                                            </div>
+                                            <div class="upload-content">
+                                                <h4>Accord du propriétaire</h4>
+                                                <p>Téléversez le document d'accord</p>
+                                                <div class="file-types">JPG, PNG, PDF - Max 5MB</div>
+                                            </div>
+                                            <div class="upload-btn">
+                                                <i class="fas fa-plus"></i> Ajouter
+                                            </div>
+                                        </label>
+                                        <div class="file-preview-grid" id="ownerAgreementPreview"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Declarant ID -->
+                            <div class="form-group">
+                                <div class="form-column">
+                                    <label class="required">CIN ou passeport du déclarant</label>
+                                    <div class="modern-upload-card">
+                                        <input type="file" id="declarantId" name="declarantId"
+                                            accept=".jpg,.jpeg,.png,.pdf" required>
+                                        <label for="declarantId" class="upload-card">
+                                            <div class="upload-icon">
+                                                <i class="fas fa-user-edit"></i>
+                                            </div>
+                                            <div class="upload-content">
+                                                <h4>Identité du déclarant</h4>
+                                                <p>Téléversez votre pièce d'identité</p>
+                                                <div class="file-types">JPG, PNG, PDF - Max 5MB</div>
+                                            </div>
+                                            <div class="upload-btn">
+                                                <i class="fas fa-plus"></i> Ajouter
+                                            </div>
+                                        </label>
+                                        <div class="file-preview-grid" id="declarantIdPreview"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Section 7: Frais -->
+                            <div class="form-section">
+                                <h2>FRAIS À RÉGLER</h2>
+                                <p>Ces frais sont exigibles <strong>quel que soit le canal de location</strong> (agence
+                                    ou propriétaire). Ils couvrent la <strong>gestion administrative</strong>, la
+                                    <strong>sécurité</strong> et les <strong>services généraux</strong> liés à l'accueil
+                                    des locataires au sein de la <strong>Résidence Aqua Resort.</strong></p>
+
+                                <div class="fees-summary">
+                                    <div class="fee-item">
+                                        <span>Frais de dossier fixes (non doublables) :</span>
+                                        <span id="fixedFee">30 DT</span>
+                                    </div>
+                                    <div class="fee-item">
+                                        <span>Cotisation complémentaire (frais de location) :</span>
+                                        <span id="variableFee">0 DT</span>
+                                    </div>
+                                    <div class="fee-item fee-total">
+                                        <span>Montant total à régler :</span>
+                                        <span id="totalFee">30 DT</span>
+                                    </div>
+                                </div>
+
+                                <div class="note">
+                                    Ce montant est exigible avant l'entrée des locataires.
+                                </div>
+
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Type d'appartement</th>
+                                            <th>Séjour de 1 à 10 nuitées</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>S+1</td>
+                                            <td>50 DT</td>
+                                        </tr>
+                                        <tr>
+                                            <td>S+2</td>
+                                            <td>80 DT</td>
+                                        </tr>
+                                        <tr>
+                                            <td>S+3</td>
+                                            <td>100 DT</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Section 8: Regulations and Commitments -->
+                            <div class="form-section">
+                                <h2>RÈGLEMENT INTÉRIEUR ET ENGAGEMENTS</h2>
+
+                                <div class="regulations">
+                                    <p>Je m'engage à :</p>
+                                    <div class="regulation-item">Informer mes locataires qu'ils sont tenus de respecter
+                                        le règlement intérieur de la Résidence</div>
+                                    <div class="regulation-item">Ne pas accueillir plus de personnes que le nombre
+                                        autorisé</div>
+                                    <div class="regulation-item">Éviter toute nuisance sonore ou incivilité</div>
+                                </div>
+
+                                <div class="commitment-group">
+                                    <div class="commitment-item">
+                                        <input type="checkbox" id="regulationKnowledge" name="regulationKnowledge">
+                                        <label for="regulationKnowledge" class="required">J'ai pris connaissance du
+                                            règlement intérieur de la Résidence Aqua Resort.</label>
+                                    </div>
+                                    <div class="commitment-item">
+                                        <input type="checkbox" id="informationAccuracy" name="informationAccuracy">
+                                        <label for="informationAccuracy" class="required">Je certifie l'exactitude des
+                                            informations fournies.</label>
+                                    </div>
+                                    <div class="commitment-item">
+                                        <input type="checkbox" id="feeCommitment" name="feeCommitment">
+                                        <label for="feeCommitment" class="required">Je m'engage à régler les frais dus
+                                            avant l'entrée des locataires.</label>
+                                    </div>
+                                </div>
+
+                                <h3>Conditions Générales d'Utilisation (CGU) ET Règlement intérieur</h3>
+
+                                <div class="regulation-section">
+                                    <div class="regulation-title">1. Objet de la plateforme</div>
+                                    <p>La plateforme numérique est conçue pour <strong>centraliser les échanges entre le
+                                            Syndic et les parties autorisées</strong> (copropriétaires et intermédiaires
+                                        mandatés) à des fins administratives. Elle ne sert pas à la diffusion d'annonces
+                                        locatives.</p>
+                                </div>
+
+                                <div class="regulation-section">
+                                    <div class="regulation-title">2. Accès et utilisateurs autorisés</div>
+                                    <div class="regulation-item"><strong>Syndic</strong> : accès administrateur</div>
+                                    <div class="regulation-item"><strong>Copropriétaires</strong> : accès sur demande
+                                    </div>
+                                    <div class="regulation-item"><strong>Intermédiaires mandatés</strong> : accès
+                                        obligatoire via mandat</div>
+                                    <div class="regulation-item"><strong>Locataires</strong> : aucun accès</div>
+                                </div>
+
+                                <div class="regulation-section">
+                                    <div class="regulation-title">3. Fonctionnalités</div>
+                                    <div class="regulation-item">Dépôt de documents (procurations, pièces d'identité,
+                                        demandes d'intervention)</div>
+                                    <div class="regulation-item">Suivi des dossiers par le Syndic</div>
+                                    <div class="regulation-item">Archivage numérique</div>
+                                </div>
+
+                                <div class="regulation-section">
+                                    <div class="regulation-title">4. Engagements</div>
+                                    <p>L'utilisateur s'engage à :</p>
+                                    <div class="regulation-item">Fournir des informations exactes</div>
+                                    <div class="regulation-item">Respecter la confidentialité</div>
+                                    <div class="regulation-item">Ne pas utiliser la plateforme à d'autres fins</div>
+                                </div>
+
+                                <div class="regulation-section">
+                                    <div class="regulation-title">5. Rôle du Syndic</div>
+                                    <p>Le Syndic reçoit les documents, les classe, valide les accès. Il n'est pas
+                                        responsable du contenu transmis par les utilisateurs.</p>
+                                </div>
+
+                                <div class="regulation-section">
+                                    <div class="regulation-title">6. Confidentialité et sécurité</div>
+                                    <p>Les données sont <strong>stockées sur un serveur sécurisé</strong> et accessibles
+                                        uniquement aux utilisateurs autorisés.</p>
+                                </div>
+
+                                <div class="regulation-section">
+                                    <div class="regulation-title">7. Droit applicable</div>
+                                    <p>La présente plateforme est régie par le <strong>droit tunisien</strong>. Tout
+                                        litige relève de la <strong>compétence des tribunaux de Sousse.</strong></p>
+                                </div>
+
+                                <div class="regulation-section">
+                                    <div class="regulation-title">8. Respect du règlement de la résidence et engagements
+                                        spécifiques</div>
+                                    <p>Tout <strong>intermédiaire mandaté</strong> (agence, concierge, représentant d'un
+                                        copropriétaire, etc.) accédant à la plateforme s'engage à :</p>
+                                    <div class="regulation-item">Respecter le <strong>règlement de copropriété</strong>
+                                        et le <strong>règlement intérieur</strong> de la Résidence Aqua Resort, en
+                                        vigueur à la date d'utilisation.</div>
+                                    <div class="regulation-item">Ne pas porter atteinte à la
+                                        <strong>tranquillité</strong>, la sécurité ou la propreté des parties communes,
+                                        ni faciliter de telles atteintes.</div>
+                                    <div class="regulation-item">Utiliser la plateforme uniquement à des fins
+                                        administratives autorisées, et dans le cadre strict du mandat.</div>
+                                    <div class="regulation-item">Reconnaître que toute infraction pourra entraîner :
+                                        <div class="sub-steps">
+                                            <div class="sub-step">La restriction ou suspension de l'accès à la
+                                                plateforme</div>
+                                            <div class="sub-step">Une notification au copropriétaire mandant</div>
+                                            <div class="sub-step">Une transmission du dossier au conseil de copropriété
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h2>VALIDATION & SIGNATURE ÉLECTRONIQUE</h2>
+
+                                <div class="signature-section">
+                                    <p><strong>J'accepte les Conditions Générales d'Utilisation et le règlement
+                                            intérieur</strong></p>
+
+                                    <div class="commitment-item" style="margin: 25px auto; max-width: 500px;">
+                                        <input type="checkbox" id="acceptTerms">
+                                        <label for="acceptTerms" class="required">Je valide et signe ce formulaire de
+                                            façon électronique.</label>
+                                    </div>
+
+                                    <div class="signature-pad" id="signaturePad">
+                                        <canvas id="signatureCanvas" width="500" height="150"
+                                            style="border: 1px solid #d4af37; background: white; border-radius: 8px;"></canvas>
+                                    </div>
+
+                                    <button type="button" class="btn-upload" onclick="clearSignature()"
+                                        style="margin-bottom: 20px;"><i class="fas fa-eraser"></i> Effacer la
+                                        signature</button>
+
+                                    <div class="signature-label">Signature électronique</div>
+                                    <div class="signature-date">Fait à Monastir, le <span id="currentDate"></span></div>
+                                </div>
+                            </div>
+
+                            <!-- Submit Section -->
+                            <div class="btn-container">
+                                <button type="button" class="btn btn-reset" onclick="resetForm()">
+                                    <i class="fas fa-redo"></i> RÉINITIALISER
+                                </button>
+                                <button type="button" class="btn btn-submit" onclick="validateForm()">
+                                    <i class="fas fa-check-circle"></i> SOUMETTRE LE FORMULAIRE
+                                </button>
+                            </div>
+                            <div id="successMessage">
+                                ✅ Formulaire soumis avec succès ! Veuillez l'imprimer et le présenter à la caisse du
+                                Syndic.
+                            </div>
+                            <div id="FailedMessage">
+                                ❌ Veuillez remplir tous les champs obligatoires et accepter les conditions.
+                            </div>
             </form>
         </div>
-        
+
         <footer>
             <p>Résidence Aqua Resort &copy; 2025 | Tous droits réservés</p>
             <p>Formulaire de déclaration de location - Version Luxe</p>
         </footer>
     </div>
     <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(function() {
-      const styles = document.createElement('link');
-      styles.rel = 'stylesheet';
-      styles.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
-      document.head.appendChild(styles);
-    }, 500);
-  });
-</script>
+        document.addEventListener('DOMContentLoaded', function () {
+            setTimeout(function () {
+                const styles = document.createElement('link');
+                styles.rel = 'stylesheet';
+                styles.href =
+                    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+                document.head.appendChild(styles);
+            }, 500);
+        });
+    </script>
     <script src="script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </body>
+
 </html>
