@@ -536,3 +536,62 @@ async function generatePDF() {
     return pdf.output('datauristring');
 }
 
+// Initialize all file inputs
+document.querySelectorAll('.modern-upload-card input[type="file"]').forEach(input => {
+  input.addEventListener('change', function() {
+    updateFilePreview(this);
+  });
+});
+
+function updateFilePreview(input) {
+  const previewId = input.id + 'Preview';
+  const previewContainer = document.getElementById(previewId);
+  previewContainer.innerHTML = '';
+  
+  if (input.files.length > 0) {
+    Array.from(input.files).forEach((file, index) => {
+      const fileItem = document.createElement('div');
+      fileItem.className = 'file-preview-item';
+      fileItem.innerHTML = `
+        <div class="file-preview-icon">
+          <i class="fas ${getFileIcon(file.type)}"></i>
+        </div>
+        <div class="file-preview-info">
+          <div class="file-preview-name">${file.name}</div>
+          <div class="file-preview-size">${formatFileSize(file.size)}</div>
+        </div>
+        <div class="file-preview-remove" onclick="removeFile('${input.id}', ${index})">
+          <i class="fas fa-times"></i>
+        </div>
+      `;
+      previewContainer.appendChild(fileItem);
+    });
+  }
+}
+
+// Helper functions (keep your existing ones)
+function getFileIcon(type) {
+  if (type.includes('image')) return 'fa-file-image';
+  if (type.includes('pdf')) return 'fa-file-pdf';
+  return 'fa-file';
+}
+
+function formatFileSize(bytes) {
+  if (bytes === 0) return '0 Bytes';
+  const k = 1024;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
+function removeFile(inputId, index) {
+  const input = document.getElementById(inputId);
+  const files = Array.from(input.files);
+  files.splice(index, 1);
+  
+  const dataTransfer = new DataTransfer();
+  files.forEach(file => dataTransfer.items.add(file));
+  input.files = dataTransfer.files;
+  
+  updateFilePreview(input);
+}
