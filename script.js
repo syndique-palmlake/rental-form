@@ -150,6 +150,16 @@ function validateForm() {
             if (cb && cb.parentElement) cb.parentElement.style.color = '';
         }
     });
+    const fileInputs = document.querySelectorAll('input[type="file"][required]');
+  fileInputs.forEach(input => {
+    if (input.files.length === 0) {
+      isValid = false;
+      const area = document.getElementById(input.id + 'Area');
+      area.classList.add('has-error');
+      area.insertAdjacentHTML('beforeend', 
+        '<div class="file-error">Ce champ est obligatoire</div>');
+    }
+  });
 
     if (isValid) {
         console.log("Form is valid. Submitting..."); // Debug log
@@ -327,6 +337,146 @@ document.getElementById('declarantType').addEventListener('change', function() {
         document.getElementById('ownerId').value = '';
     }
 });
+// File validation configuration
+const FILE_VALIDATION = {
+  maxSize: 5 * 1024 * 1024, // 5MB
+  allowedTypes: ['image/jpeg', 'image/png', 'application/pdf'],
+  allowedExtensions: ['.jpg', '.jpeg', '.png', '.pdf']
+};
+
+// Handle drag over
+function handleDragOver(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  e.currentTarget.classList.add('dragover');
+}
+
+// Handle drag leave
+function handleDragLeave(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  e.currentTarget.classList.remove('dragover');
+}
+
+// Handle drop
+function handleDrop(e, inputId) {
+  e.preventDefault();
+  e.stopPropagation();
+  e.currentTarget.classList.remove('dragover');
+  
+  const files = e.dataTransfer.files;
+  if (files.length) {
+    document.getElementById(inputId).files = files;
+    handleFileSelect(document.getElementById(inputId), e.currentTarget.id);
+  }
+}
+
+// Handle file selection
+function handleFileSelect(input, areaId) {
+  const files = input.files;
+  const previewContainer = document.getElementById(areaId.replace('Area', 'Preview'));
+  previewContainer.innerHTML = '';
+  
+  let hasErrors = false;
+  
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    const fileItem = document.createElement('div');
+    fileItem.className = 'file-preview-item';
+    
+    // Validate file
+    const validationResult = validateFile(file);
+    
+    if (validationResult.isValid) {
+      fileItem.innerHTML = `
+        <i class="fas ${getFileIcon(file.type)}"></i>
+        <div class="file-info">
+          <div class="file-name">${file.name}</div>
+          <div class="file-size">${formatFileSize(file.size)}</div>
+        </div>
+        <i class="fas fa-times file-remove" onclick="removeFile('${input.id}', ${i})"></i>
+      `;
+    } else {
+      hasErrors = true;
+      fileItem.innerHTML = `
+        <i class="fas fa-exclamation-triangle text-warning"></i>
+        <div class="file-info">
+          <div class="file-name">${file.name}</div>
+          <div class="file-error">${validationResult.message}</div>
+        </div>
+        <i class="fas fa-times file-remove" onclick="removeFile('${input.id}', ${i})"></i>
+      `;
+    }
+    
+    previewContainer.appendChild(fileItem);
+  }
+  
+  if (hasErrors) {
+    document.getElementById(areaId).classList.add('has-error');
+  } else {
+    document.getElementById(areaId).classList.remove('has-error');
+  }
+}
+
+// Validate file
+function validateFile(file) {
+  // Check file type
+  const extension = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+  const isValidType = FILE_VALIDATION.allowedTypes.includes(file.type) || 
+                     FILE_VALIDATION.allowedExtensions.includes(extension);
+  
+  // Check file size
+  const isValidSize = file.size <= FILE_VALIDATION.maxSize;
+  
+  if (!isValidType && !isValidSize) {
+    return {
+      isValid: false,
+      message: 'Type de fichier non supporté et taille trop grande'
+    };
+  } else if (!isValidType) {
+    return {
+      isValid: false,
+      message: 'Type de fichier non supporté'
+    };
+  } else if (!isValidSize) {
+    return {
+      isValid: false,
+      message: 'Fichier trop volumineux (max 5MB)'
+    };
+  }
+  
+  return { isValid: true };
+}
+
+// Helper functions
+function getFileIcon(type) {
+  if (type.includes('image')) return 'fa-file-image';
+  if (type.includes('pdf')) return 'fa-file-pdf';
+  return 'fa-file';
+}
+
+function formatFileSize(bytes) {
+  if (bytes === 0) return '0 Bytes';
+  const k = 1024;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
+// Remove file from input
+function removeFile(inputId, index) {
+  const input = document.getElementById(inputId);
+  const files = Array.from(input.files);
+  files.splice(index, 1);
+  
+  // Create new DataTransfer to update files
+  const dataTransfer = new DataTransfer();
+  files.forEach(file => dataTransfer.items.add(file));
+  input.files = dataTransfer.files;
+  
+  // Update preview
+  handleFileSelect(input, inputId.replace('File', 'FileArea'));
+}
 // keep all your existing code for DOM, calculations, validation, signature pad...
 
 /*async function submitAll() {
