@@ -329,7 +329,7 @@ document.getElementById('declarantType').addEventListener('change', function() {
 });
 // keep all your existing code for DOM, calculations, validation, signature pad...
 
-async function submitAll() {
+/*async function submitAll() {
   if (!validateForm()) return;
 
   const form = document.getElementById("rentalform");
@@ -357,5 +357,32 @@ async function submitAll() {
     alert("❌ Échec communication Apps Script");
   });
 }
-
+*/
+async function generatePDF() {
+    const { jsPDF } = window.jspdf;
+    const form = document.getElementById('rentalform');
+    
+    // Create PDF
+    const pdf = new jsPDF('p', 'pt', 'a4');
+    
+    // Add form content
+    await html2canvas(form, {
+        scale: 2,
+        logging: false,
+        useCORS: true,
+        allowTaint: true
+    }).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const imgWidth = pdf.internal.pageSize.getWidth() - 40;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        
+        pdf.addImage(imgData, 'PNG', 20, 20, imgWidth, imgHeight);
+    });
+    
+    // Save PDF
+    pdf.save('declaration_location.pdf');
+    
+    // Optionally return the PDF data
+    return pdf.output('datauristring');
+}
 
