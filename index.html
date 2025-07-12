@@ -185,107 +185,173 @@
     <h2>DOCUMENTS À TÉLÉCHARGER</h2>
     
     <!-- Section for all users -->
-    <div class="form-group">
-        <div class="form-column">
-            <label class="required">Copie du CIN ou Passeport des locataires principaux (5 maximum)</label>
-            <div class="file-upload" onclick="document.getElementById('idFile').click()">
-                <i class="fas fa-cloud-upload-alt"></i>
-                <p>Glissez-déposez vos fichiers ici ou cliquez pour parcourir</p>
-                <button type="button" class="btn-upload"><i class="fas fa-file-upload"></i> Choisir des fichiers</button>
-                <input type="file" id="idFile" name="idFile" class="file-input" multiple required>
-            </div>
-        </div>
+   <!-- Section 1: Main Tenant IDs -->
+<div class="form-group">
+  <div class="form-column">
+    <label class="required">Copie du CIN ou Passeport des locataires principaux (5 maximum)</label>
+    <div class="file-upload-wrapper">
+      <div class="file-upload-area" id="idFileArea" 
+           ondragover="handleDragOver(event)" 
+           ondragleave="handleDragLeave(event)" 
+           ondrop="handleDrop(event, 'idFile')">
+        <i class="fas fa-cloud-upload-alt"></i>
+        <p>Glissez-déposez vos fichiers ici ou cliquez pour parcourir</p>
+        <span class="file-requirements">(Formats acceptés: JPG, PNG, PDF - Max 5MB par fichier)</span>
+        <input type="file" id="idFile" name="idFile" class="file-input" 
+               accept=".jpg,.jpeg,.png,.pdf" multiple required
+               onchange="handleFileSelect(this, 'idFileArea')">
+        <button type="button" class="btn-upload">
+          <i class="fas fa-file-upload"></i> Choisir des fichiers
+        </button>
+      </div>
+      <div class="file-preview" id="idFilePreview"></div>
     </div>
-    
-    <div class="form-group">
-        <div class="form-column">
-            <label>Copie des passeports des autres locataires (si plus de 5)</label>
-            <div class="file-upload" onclick="document.getElementById('additionalIdFile').click()">
-                <i class="fas fa-cloud-upload-alt"></i>
-                <p>Glissez-déposez vos fichiers ici ou cliquez pour parcourir</p>
-                <button type="button" class="btn-upload"><i class="fas fa-file-upload"></i> Choisir des fichiers</button>
-                <input type="file" id="additionalIdFile" name="additionalIdFile" class="file-input" multiple>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Section for Propriétaire -->
-    <div id="ownerDocuments" class="document-section">
-        <div class="form-group">
-            <div class="form-column">
-                <label class="required">CIN ou passeport du propriétaire</label>
-                <div class="file-upload" onclick="document.getElementById('ownerId').click()">
-                    <i class="fas fa-id-card"></i>
-                    <p>Télécharger la pièce d'identité du propriétaire</p>
-                    <button type="button" class="btn-upload"><i class="fas fa-file-upload"></i> Choisir un fichier</button>
-                    <input type="file" id="ownerId" name="ownerId" class="file-input">
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Section for Agence/Représentant -->
-    <div id="agencyDocuments" class="document-section" style="display: none;">
-        <h3>Documents requis pour les agences et représentants</h3>
-        <div class="form-group">
-            <div class="form-column">
-                <label class="required">Procuration du propriétaire</label>
-                <div class="file-upload" onclick="document.getElementById('procurationFile').click()">
-                    <i class="fas fa-file-contract"></i>
-                    <p>Télécharger la procuration signée</p>
-                    <button type="button" class="btn-upload"><i class="fas fa-file-upload"></i> Choisir un fichier</button>
-                    <input type="file" id="procurationFile" name="procurationFile" class="file-input">
-                </div>
-            </div>
-            <div class="form-column">
-                <label class="required">CIN ou passeport du représentant</label>
-                <div class="file-upload" onclick="document.getElementById('representativeId').click()">
-                    <i class="fas fa-id-card"></i>
-                    <p>Télécharger la pièce d'identité du représentant</p>
-                    <button type="button" class="btn-upload"><i class="fas fa-file-upload"></i> Choisir un fichier</button>
-                    <input type="file" id="representativeId" name="representativeId" class="file-input">
-                </div>
-            </div>
-        </div>
-    </div>
+  </div>
 </div>
-                
-                <!-- Section 6: Procuration -->
-                <div class="form-section">
-                    <h2>PARTIE AGENCE ET INTERMÉDIARE</h2>
-                    <div class="form-group">
-                        <div class="form-column">
-                            <label class="required">Procuration du propriétaire à l'agence ou à l'intermédiaire</label>
-                            <div class="file-upload" onclick="document.getElementById('procurationFile').click()">
-                                <i class="fas fa-file-contract"></i>
-                                <p>Télécharger la procuration</p>
-                                <button type="button" class="btn-upload"><i class="fas fa-file-upload"></i> Choisir un fichier</button>
-                                <input type="file" id="procurationFile" name="procurationFile" class="file-input">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <div class="form-column">
-                            <label class="required">Accord du propriétaire</label>
-                            <div class="file-upload" onclick="document.getElementById('ownerAgreement').click()">
-                                <i class="fas fa-handshake"></i>
-                                <p>Télécharger l'accord du propriétaire</p>
-                                <button type="button" class="btn-upload"><i class="fas fa-file-upload"></i> Choisir un fichier</button>
-                                <input type="file" id="ownerAgreement" name="ownerAgreement" class="file-input">
-                            </div>
-                        </div>
-                        <div class="form-column">
-                            <label class="required">CIN ou passeport du déclarant</label>
-                            <div class="file-upload" onclick="document.getElementById('declarantId').click()">
-                                <i class="fas fa-id-card"></i>
-                                <p>Télécharger la pièce d'identité</p>
-                                <button type="button" class="btn-upload"><i class="fas fa-file-upload"></i> Choisir un fichier</button>
-                                <input type="file" id="declarantId" name="declarantId" class="file-input">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+<!-- Section 2: Additional Tenant IDs -->
+<div class="form-group">
+  <div class="form-column">
+    <label>Copie des passeports des autres locataires (si plus de 5)</label>
+    <div class="file-upload-wrapper">
+      <div class="file-upload-area" id="additionalIdFileArea" 
+           ondragover="handleDragOver(event)" 
+           ondragleave="handleDragLeave(event)" 
+           ondrop="handleDrop(event, 'additionalIdFile')">
+        <i class="fas fa-cloud-upload-alt"></i>
+        <p>Glissez-déposez vos fichiers ici ou cliquez pour parcourir</p>
+        <span class="file-requirements">(Formats acceptés: JPG, PNG, PDF - Max 5MB par fichier)</span>
+        <input type="file" id="additionalIdFile" name="additionalIdFile" class="file-input" 
+               accept=".jpg,.jpeg,.png,.pdf" multiple
+               onchange="handleFileSelect(this, 'additionalIdFileArea')">
+        <button type="button" class="btn-upload">
+          <i class="fas fa-file-upload"></i> Choisir des fichiers
+        </button>
+      </div>
+      <div class="file-preview" id="additionalIdFilePreview"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 3: Owner ID -->
+<div class="form-group">
+  <div class="form-column">
+    <label class="required">CIN ou passeport du propriétaire</label>
+    <div class="file-upload-wrapper">
+      <div class="file-upload-area" id="ownerIdArea" 
+           ondragover="handleDragOver(event)" 
+           ondragleave="handleDragLeave(event)" 
+           ondrop="handleDrop(event, 'ownerId')">
+        <i class="fas fa-id-card"></i>
+        <p>Télécharger la pièce d'identité du propriétaire</p>
+        <span class="file-requirements">(Formats acceptés: JPG, PNG, PDF - Max 5MB)</span>
+        <input type="file" id="ownerId" name="ownerId" class="file-input" 
+               accept=".jpg,.jpeg,.png,.pdf"
+               onchange="handleFileSelect(this, 'ownerIdArea')">
+        <button type="button" class="btn-upload">
+          <i class="fas fa-file-upload"></i> Choisir un fichier
+        </button>
+      </div>
+      <div class="file-preview" id="ownerIdPreview"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 4: Agency Documents - Procuration -->
+<div class="form-group">
+  <div class="form-column">
+    <label class="required">Procuration du propriétaire</label>
+    <div class="file-upload-wrapper">
+      <div class="file-upload-area" id="procurationFileArea" 
+           ondragover="handleDragOver(event)" 
+           ondragleave="handleDragLeave(event)" 
+           ondrop="handleDrop(event, 'procurationFile')">
+        <i class="fas fa-file-contract"></i>
+        <p>Télécharger la procuration signée</p>
+        <span class="file-requirements">(Formats acceptés: JPG, PNG, PDF - Max 5MB)</span>
+        <input type="file" id="procurationFile" name="procurationFile" class="file-input" 
+               accept=".jpg,.jpeg,.png,.pdf"
+               onchange="handleFileSelect(this, 'procurationFileArea')">
+        <button type="button" class="btn-upload">
+          <i class="fas fa-file-upload"></i> Choisir un fichier
+        </button>
+      </div>
+      <div class="file-preview" id="procurationFilePreview"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 5: Agency Documents - Representative ID -->
+<div class="form-group">
+  <div class="form-column">
+    <label class="required">CIN ou passeport du représentant</label>
+    <div class="file-upload-wrapper">
+      <div class="file-upload-area" id="representativeIdArea" 
+           ondragover="handleDragOver(event)" 
+           ondragleave="handleDragLeave(event)" 
+           ondrop="handleDrop(event, 'representativeId')">
+        <i class="fas fa-id-card"></i>
+        <p>Télécharger la pièce d'identité du représentant</p>
+        <span class="file-requirements">(Formats acceptés: JPG, PNG, PDF - Max 5MB)</span>
+        <input type="file" id="representativeId" name="representativeId" class="file-input" 
+               accept=".jpg,.jpeg,.png,.pdf"
+               onchange="handleFileSelect(this, 'representativeIdArea')">
+        <button type="button" class="btn-upload">
+          <i class="fas fa-file-upload"></i> Choisir un fichier
+        </button>
+      </div>
+      <div class="file-preview" id="representativeIdPreview"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 6: Owner Agreement -->
+<div class="form-group">
+  <div class="form-column">
+    <label class="required">Accord du propriétaire</label>
+    <div class="file-upload-wrapper">
+      <div class="file-upload-area" id="ownerAgreementArea" 
+           ondragover="handleDragOver(event)" 
+           ondragleave="handleDragLeave(event)" 
+           ondrop="handleDrop(event, 'ownerAgreement')">
+        <i class="fas fa-handshake"></i>
+        <p>Télécharger l'accord du propriétaire</p>
+        <span class="file-requirements">(Formats acceptés: JPG, PNG, PDF - Max 5MB)</span>
+        <input type="file" id="ownerAgreement" name="ownerAgreement" class="file-input" 
+               accept=".jpg,.jpeg,.png,.pdf"
+               onchange="handleFileSelect(this, 'ownerAgreementArea')">
+        <button type="button" class="btn-upload">
+          <i class="fas fa-file-upload"></i> Choisir un fichier
+        </button>
+      </div>
+      <div class="file-preview" id="ownerAgreementPreview"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 7: Declarant ID -->
+<div class="form-group">
+  <div class="form-column">
+    <label class="required">CIN ou passeport du déclarant</label>
+    <div class="file-upload-wrapper">
+      <div class="file-upload-area" id="declarantIdArea" 
+           ondragover="handleDragOver(event)" 
+           ondragleave="handleDragLeave(event)" 
+           ondrop="handleDrop(event, 'declarantId')">
+        <i class="fas fa-id-card"></i>
+        <p>Télécharger la pièce d'identité</p>
+        <span class="file-requirements">(Formats acceptés: JPG, PNG, PDF - Max 5MB)</span>
+        <input type="file" id="declarantId" name="declarantId" class="file-input" 
+               accept=".jpg,.jpeg,.png,.pdf"
+               onchange="handleFileSelect(this, 'declarantIdArea')">
+        <button type="button" class="btn-upload">
+          <i class="fas fa-file-upload"></i> Choisir un fichier
+        </button>
+      </div>
+      <div class="file-preview" id="declarantIdPreview"></div>
+    </div>
+  </div>
+</div>
                 
                 <!-- Section 7: Frais -->
                 <div class="form-section">
