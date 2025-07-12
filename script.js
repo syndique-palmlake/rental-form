@@ -329,3 +329,35 @@ document.getElementById('declarantType').addEventListener('change', function() {
         document.getElementById('ownerId').value = '';
     }
 });
+// keep all your existing code for DOM, calculations, validation, signature pad...
+
+async function submitAll() {
+  if (!validateForm()) return;
+
+  const form = document.getElementById("rentalform");
+  const formData = new FormData(form);
+  const signatureData = document.getElementById("signatureCanvas").toDataURL("image/png");
+  formData.append("signature", signatureData);
+
+  // Send to Google Apps Script
+  fetch("https://script.google.com/macros/s/AKfycbzTOTSxKfeJxqQGElnjuNdHm2yFDJoEBebKuc6zHdzR7yuux_hGAn_BxWEM22en2gkS/exec", {
+    method: "POST",
+    body: formData
+  })
+  .then(res => res.json())
+  .then(res => {
+    if (res.success) {
+      alert("✅ Soumis à Google Apps Script !");
+      // then let native FormSubmit happen:
+      form.submit();
+    } else {
+      alert("❌ Erreur Apps Script : " + res.message);
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    alert("❌ Échec communication Apps Script");
+  });
+}
+
+
