@@ -127,25 +127,23 @@ function validateForm() {
         'startDate', 'endDate', 'adults', 'children',
         'tenantName1', 'tenantDob1', 'nationality1', 'idNumber1'
     ];
-    
-    // Check all required fields
+
     requiredFields.forEach(id => {
         const el = document.getElementById(id);
         if (!el || (el.type !== 'number' && !el.value.trim()) || (el.type === 'number' && isNaN(parseInt(el.value)))) {
-            if (el) {
-                el.style.borderColor = '#e74c3c';
-                isValid = false;
-            }
+            console.error(`Missing or invalid field: ${id}`); // Debug log
+            if (el) el.style.borderColor = '#e74c3c';
+            isValid = false;
         } else {
             if (el) el.style.borderColor = '#d4af37';
         }
     });
 
-    // Check checkboxes
     const checkboxes = ['regulationKnowledge', 'informationAccuracy', 'feeCommitment', 'acceptTerms'];
     checkboxes.forEach(id => {
         const cb = document.getElementById(id);
         if (!cb || !cb.checked) {
+            console.error(`Checkbox not checked: ${id}`); // Debug log
             if (cb && cb.parentElement) cb.parentElement.style.color = '#e74c3c';
             isValid = false;
         } else {
@@ -153,19 +151,19 @@ function validateForm() {
         }
     });
 
-    // Show appropriate message
     if (isValid) {
+        console.log("Form is valid. Submitting..."); // Debug log
         document.getElementById('successMessage').style.display = 'block';
         document.getElementById('FailedMessage').style.display = 'none';
-        submitAll(); // Call submit function if valid
+        submitAll();
     } else {
         document.getElementById('successMessage').style.display = 'none';
         document.getElementById('FailedMessage').style.display = 'block';
-        // Scroll to first error
+        // Scroll to the first error
         const firstError = document.querySelector('[style*="border-color: #e74c3c"], [style*="color: #e74c3c"]');
         if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-    
+
     return isValid;
 }
 
