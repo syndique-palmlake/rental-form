@@ -62,6 +62,13 @@ function calculateFees() {
     document.getElementById('fixedFee').textContent = `${fixedFee} DT`;
     document.getElementById('variableFee').textContent = `${variableFee} DT`;
     document.getElementById('totalFee').textContent = `${fixedFee + variableFee} DT`;
+    let serviceFee = 0;
+    if(document.getElementById('paidServiceRequest').checked) {
+        serviceFee = 50;
+    }
+
+    document.getElementById('totalFee').textContent = 
+        `${fixedFee + variableFee + serviceFee} DT`;
 }
 // ===== CALCULATE TOTAL BRACELETS =====
 function calculateBracelets() {
@@ -616,13 +623,7 @@ document.getElementById('serviceType').addEventListener('change', function() {
 function calculateFees() {
     // ... existing code ...
     
-    let serviceFee = 0;
-    if(document.getElementById('paidServiceRequest').checked) {
-        serviceFee = 50;
-    }
-
-    document.getElementById('totalFee').textContent = 
-        `${fixedFee + variableFee + serviceFee} DT`;
+   
 }
 
     
