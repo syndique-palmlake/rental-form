@@ -213,7 +213,31 @@ async function submitAll() {
         document.getElementById('successMessage').style.display = 'none';
         document.getElementById('FailedMessage').style.display = 'block';
     }
+      if(document.getElementById('paidServiceRequest').checked) {
+        const serviceFields = [
+            'serviceFullName', 'servicePhone', 'serviceEmail', 
+            'serviceType', 'serviceDate'
+        ];
+        
+        serviceFields.forEach(id => {
+            const el = document.getElementById(id);
+            if(!el.value.trim()) {
+                isValid = false;
+                el.style.borderColor = '#e74c3c';
+            }
+        });
+        
+        if(document.getElementById('serviceType').value === 'autre' &&
+           !document.getElementById('otherService').value.trim()) {
+            isValid = false;
+            document.getElementById('otherService').style.borderColor = '#e74c3c';
+        }
+    }
+    
+    return isValid;
 }
+
+
 
 
 // ===== RESET FORM =====
@@ -226,6 +250,9 @@ function resetForm() {
     document.getElementById('otherTypeContainer').style.display = 'none';
     document.getElementById('successMessage').style.display = 'none';
     document.getElementById('FailedMessage').style.display = 'none';
+    document.getElementById('paidServiceRequest').checked = false;
+    document.getElementById('paidServiceContainer').style.display = 'none';
+    document.getElementById('otherServiceContainer').style.display = 'none';
     const tenantsContainer = document.getElementById('tenantsContainer');
     const tenants = tenantsContainer.querySelectorAll('.tenant-group');
     for (let i = tenants.length - 1; i > 0; i--) {
@@ -319,6 +346,7 @@ function addTenant() {
     newTenant.querySelector('.remove-tenant').addEventListener('click', function() {
         removeTenant(this.getAttribute('data-tenant'));
     });
+    
     
 }
 
@@ -569,3 +597,33 @@ function removeFile(inputId, index) {
   
   updateFilePreview(input);
 }
+// Add to DOMContentLoaded event
+document.getElementById('paidServiceRequest').addEventListener('change', function() {
+    document.getElementById('paidServiceContainer').style.display = 
+        this.checked ? 'block' : 'none';
+        
+    if(this.checked) {
+        calculateFees(); // Update fees
+    }
+});
+
+document.getElementById('serviceType').addEventListener('change', function() {
+    document.getElementById('otherServiceContainer').style.display = 
+        this.value === 'autre' ? 'block' : 'none';
+});
+
+// Modify calculateFees function
+function calculateFees() {
+    // ... existing code ...
+    
+    let serviceFee = 0;
+    if(document.getElementById('paidServiceRequest').checked) {
+        serviceFee = 50;
+    }
+
+    document.getElementById('totalFee').textContent = 
+        `${fixedFee + variableFee + serviceFee} DT`;
+}
+
+    
+  
