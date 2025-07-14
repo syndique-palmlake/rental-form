@@ -22,6 +22,16 @@ document.addEventListener('DOMContentLoaded', function () {
             if (this.value) this.style.borderColor = '#d4af37';
         });
     });
+    // Add to DOMContentLoaded event
+document.getElementById('serviceType').addEventListener('change', function() {
+    document.getElementById('otherServiceContainer').style.display = 
+        this.value === 'autre' ? 'block' : 'none';
+});
+
+document.getElementById('feedbackType').addEventListener('change', function() {
+    document.getElementById('reclamationTypeContainer').style.display = 
+        this.value === 'reclamation' ? 'block' : 'none';
+});
 
     // Initial calculations
     calculateFees();
@@ -158,7 +168,6 @@ function validateForm() {
       area.classList.add('has-error');
       area.insertAdjacentHTML('beforeend', 
         '<div class="file-error">Ce champ est obligatoire</div>');
-        
     }
   });
 
@@ -177,6 +186,35 @@ function validateForm() {
 
     return isValid;
 }
+async function submitAll() {
+    const form = document.getElementById('rentalform');
+    const formData = new FormData(form);
+
+    const signatureDataUrl = canvas.toDataURL("image/png");
+    formData.append("signatureData", signatureDataUrl);
+
+    try {
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.text();
+
+        if (result.includes("SUCCESS")) {
+            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('FailedMessage').style.display = 'none';
+            setTimeout(() => resetForm(), 3000);
+        } else {
+            throw new Error(result);
+        }
+    } catch (err) {
+        console.error("Form submission failed:", err);
+        document.getElementById('successMessage').style.display = 'none';
+        document.getElementById('FailedMessage').style.display = 'block';
+    }
+}
+
 
 // ===== RESET FORM =====
 function resetForm() {
@@ -530,32 +568,4 @@ function removeFile(inputId, index) {
   input.files = dataTransfer.files;
   
   updateFilePreview(input);
-}
-async function submitAll() {
-    const form = document.getElementById('rentalform');
-    const formData = new FormData(form);
-
-    const signatureDataUrl = canvas.toDataURL("image/png");
-    formData.append("signatureData", signatureDataUrl);
-
-    try {
-        const response = await fetch(form.action, {
-            method: 'POST',
-            body: formData
-        });
-
-        const result = await response.text();
-
-        if (result.includes("SUCCESS")) {
-            document.getElementById('successMessage').style.display = 'block';
-            document.getElementById('FailedMessage').style.display = 'none';
-            setTimeout(() => resetForm(), 3000);
-        } else {
-            throw new Error(result);
-        }
-    } catch (err) {
-        console.error("Form submission failed:", err);
-        document.getElementById('successMessage').style.display = 'none';
-        document.getElementById('FailedMessage').style.display = 'block';
-    }
 }
