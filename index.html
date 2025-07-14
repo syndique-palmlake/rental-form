@@ -32,7 +32,7 @@
         </div>
 
         <div class="form-container">
-            <form id="rentalform" action="https://formsubmit.co/6b953a0863912ca741d718273a32edfc" method="POST">
+            <form id="rentalform" action= "" method="POST" enctype="multipart/form-data">
                 <!-- Section 1: Déclarant Identity -->
                 <div class="form-section">
                     <h2>IDENTITÉ DU DÉCLARANT</h2>
@@ -415,7 +415,66 @@
                                     </tbody>
                                 </table>
                             </div>
+                           <!-- Add this after the fees section -->
+<div class="form-section">
+    <h2>SERVICE SUPPLÉMENTAIRE PAYANT (50 DT)</h2>
+    <div class="form-group">
+        <div class="form-column">
+            <input type="checkbox" id="paidServiceRequest" name="paidServiceRequest" value="50">
+            <label for="paidServiceRequest">Je souhaite bénéficier d'un service payant supplémentaire (50 DT)</label>
+        </div>
+    </div>
 
+    <div id="paidServiceContainer" style="display: none;">
+        <div class="form-group">
+            <div class="form-column">
+                <label for="serviceFullName" class="required">Nom & Prénom</label>
+                <input type="text" id="serviceFullName" name="serviceFullName">
+            </div>
+            <div class="form-column">
+                <label for="servicePhone" class="required">Téléphone</label>
+                <input type="tel" id="servicePhone" name="servicePhone">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="form-column">
+                <label for="serviceEmail" class="required">Email</label>
+                <input type="email" id="serviceEmail" name="serviceEmail">
+            </div>
+            <div class="form-column">
+                <label for="serviceType" class="required">Type de service</label>
+                <select id="serviceType" name="serviceType">
+                    <option value="">Sélectionnez</option>
+                    <option value="visiteur">Accueil visiteur supplémentaire</option>
+                    <option value="bagages">Service bagages</option>
+                    <option value="menage">Service ménage supplémentaire</option>
+                    <option value="autre">Autre service</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="otherServiceContainer" style="display: none;">
+            <div class="form-group">
+                <div class="form-column">
+                    <label for="otherService" class="required">Précisez le service</label>
+                    <input type="text" id="otherService" name="otherService">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="form-column">
+                <label for="serviceDate" class="required">Date du service</label>
+                <input type="date" id="serviceDate" name="serviceDate">
+            </div>
+            <div class="form-column">
+                <label for="serviceDetails">Détails supplémentaires</label>
+                <textarea id="serviceDetails" name="serviceDetails" rows="3"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
                             <!-- Section 8: Regulations and Commitments -->
                             <div class="form-section">
                                 <h2>RÈGLEMENT INTÉRIEUR ET ENGAGEMENTS</h2>
@@ -558,7 +617,8 @@
                                 <button type="button" class="btn btn-reset" onclick="resetForm()">
                                     <i class="fas fa-redo"></i> RÉINITIALISER
                                 </button>
-                                <button type="button" class="btn btn-submit" onclick="if (validateForm()) submitAll()">
+                               <button type="button" class="btn btn-submit" onclick="if (validateForm()) submitAll()">
+
                                     <i class="fas fa-check-circle"></i> SOUMETTRE LE FORMULAIRE
                                 </button>
                             </div>
@@ -573,6 +633,11 @@
         </div>
 
         <footer>
+<div class="btn-container">
+  <button type="button" class="btn btn-suggestion" onclick="window.location.href='feedback.html'">
+    <i class="fas fa-comment-alt"></i> Suggestion et Réclamation
+  </button>
+</div>
             <p>Résidence Aqua Resort &copy; 2025 | Tous droits réservés</p>
             <p>Formulaire de déclaration de location - Version Luxe</p>
         </footer>
