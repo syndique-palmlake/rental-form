@@ -340,6 +340,8 @@ input[type="reset"],
   cursor: pointer;
   border-radius: 10px;
   padding: 0.8rem 1.9rem;
+  min-height: 48px;
+  min-width: 48px;
   transition: all 0.3s ease;
   user-select: none;
   box-shadow: 
@@ -381,6 +383,8 @@ input[type="reset"]:active,
   font-weight: 700;
   font-size: 1rem;
   padding: 1rem 1.9rem;
+  min-height: 48px;
+  min-width: 48px;
   transition: all 0.3s ease;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
@@ -407,7 +411,9 @@ input[type="reset"]:active,
 .remove-tenant {
   background-color: #dc3545;
   color: #fff;
-  padding: 0.6rem 1rem;
+  padding: 0.8rem 1.2rem;
+  min-height: 48px;
+  min-width: 48px;
   border-radius: 10px;
   font-weight: 600;
   box-shadow: 0 4px 10px rgba(220, 53, 69, 0.4);
@@ -567,11 +573,24 @@ input[type="reset"]:active,
   margin-top: 3px;
 }
 
+/* File preview remove button - ensure touch-friendly size */
 .file-preview-remove {
   color: #e74c3c;
   cursor: pointer;
   margin-left: 10px;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  padding: 8px;
+  min-height: 48px;
+  min-width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.file-preview-remove:hover {
+  background-color: rgba(231, 76, 60, 0.1);
 }
 
 /* ==============================================
@@ -602,13 +621,102 @@ input[type="reset"]:active,
   box-shadow: 0 0 20px 4px rgba(212, 175, 55, 0.7);
 }
 
+/* Mobile optimization for signature pad */
+@media (max-width: 768px) {
+  #signatureCanvas {
+    height: 200px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    touch-action: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  .signature-section {
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #signatureCanvas {
+    height: 150px;
+  }
+  
+  /* Enhanced mobile forms and touch targets */
+  .section-separator {
+    margin: 1.5rem 0;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  /* Responsive grid layout */
+  .column-2 {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .upload-section {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Signature section mobile optimization */
+  .signature-section {
+    padding: 1rem;
+  }
+
+  .signature-controls {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .signature-controls button {
+    min-height: 56px;
+    padding: 1.2rem 2rem;
+    font-size: 1.1rem;
+  }
+
+  /* Enhanced form buttons for small screens */
+  .form-actions {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .form-actions button {
+    width: 100%;
+    min-height: 56px;
+    padding: 1.2rem;
+    font-size: 1.2rem;
+  }
+
+  /* Mobile-optimized file upload */
+  .file-preview-remove {
+    min-height: 56px;
+    min-width: 56px;
+    font-size: 1.2rem;
+  }
+}
+
 /* Clear Signature Button */
 #clearSignatureBtn {
   margin-top: 0.7rem;
   background-color: #b28c16;
   border: none;
   color: white;
-  padding: 0.6rem 1.4rem;
+  padding: 0.8rem 1.4rem;
+  min-height: 48px;
+  min-width: 48px;
   font-weight: 700;
   border-radius: 10px;
   cursor: pointer;
@@ -764,6 +872,7 @@ label.error-label {
   }
 }
 
+/* Consistent mobile breakpoints and improved touch targets */
 @media (max-width: 768px) {
   .logo-container {
     flex-direction: column;
@@ -783,6 +892,7 @@ label.error-label {
     flex-direction: column;
     text-align: center;
     padding: 25px 15px;
+    min-height: 120px;
   }
   
   .upload-content {
@@ -791,6 +901,52 @@ label.error-label {
   
   .file-preview-grid {
     grid-template-columns: 1fr;
+  }
+  
+  /* Larger touch targets on mobile */
+  button, .btn, .btn-upload, input[type="submit"], input[type="reset"] {
+    min-height: 52px;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+  }
+  
+  .remove-tenant {
+    min-height: 52px;
+    min-width: 52px;
+    padding: 1rem 1.5rem;
+  }
+  
+  /* Form inputs optimization for mobile */
+  input[type="text"], input[type="email"], input[type="tel"], 
+  input[type="date"], input[type="number"], select, textarea {
+    padding: 1rem 1.2rem;
+    font-size: 1.1rem;
+    min-height: 52px;
+  }
+  
+  /* Upload button larger on mobile */
+  .upload-btn {
+    padding: 12px 24px;
+    min-height: 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    margin: 1rem 0.5rem 2rem;
+    padding: 1rem 1.5rem;
+  }
+  
+  /* Even larger touch targets on small screens */
+  button, .btn, .btn-upload, input[type="submit"], input[type="reset"] {
+    min-height: 56px;
+    padding: 1.2rem 2.2rem;
+    font-size: 1.2rem;
+  }
+  
+  .remove-tenant {
+    min-height: 56px;
+    min-width: 56px;
   }
 }
 
@@ -962,4 +1118,30 @@ input[type="file"] {
     .service-item, .feedback-highlight {
         padding: 1rem;
     }
+}
+.preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+.preview img {
+  max-width: 150px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease-in-out;
+}
+.preview img:hover {
+  transform: scale(1.05);
+}
+.preview p {
+  font-style: italic;
+  color: #666;
+}
+.file-preview-item {
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    transition: background 0.2s;
+}
+.file-preview-item:hover {
+    background: #fffbe6;
 }
