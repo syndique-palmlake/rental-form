@@ -4,22 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feedback - Résidence Aqua Resort</title>
-    <!-- Same styles and scripts as index.html -->
-     <link rel="stylesheet" href="styles.css">
+    <!-- Add missing dependencies -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.min.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <!-- Same header as index.html -->
+            <div class="logo-container">
+                <img src="Logo palm lake-01.jpg" alt="Aqua Resort Logo" class="logo-img" loading="lazy">
+            </div>
+            <h1>FORMULAIRE DE <span>Suggestion et Réclamation</span></h1>
+            <div class="subtitle">
+                Votre avis nous intéresse. Aidez-nous à améliorer nos services.
+            </div>
         </header>
 
-        <form id="feedbackForm">
-            <h2>FORMULAIRE DE SUGGESTION/RÉCLAMATION</h2>
+        <div class="form-container">
+            <form id="feedbackForm" role="form" aria-labelledby="feedback-title">
+                <div class="form-section">
+                    <h2 id="feedback-title">FORMULAIRE DE SUGGESTION/RÉCLAMATION</h2>
+                    
+                    <!-- Success/Error message containers -->
+                    <div id="feedbackSuccessMessage" style="display: none; background:#d4edda; color:#155724; padding:15px; border-radius:8px; margin:20px 0; text-align:center;">
+                        ✅ Votre feedback a été envoyé avec succès !
+                    </div>
+                    <div id="feedbackErrorMessage" style="display: none; background:#f8d7da; color:#721c24; padding:15px; border-radius:8px; margin:20px 0; text-align:center;">
+                        ❌ Veuillez remplir tous les champs obligatoires.
+                    </div>
             
             <div class="form-group">
                 <div class="form-column">
                     <label for="feedbackType" class="required">Type de retour</label>
-                    <select id="feedbackType" name="feedbackType">
+                    <select id="feedbackType" name="feedbackType" required aria-required="true">
                         <option value="">Sélectionnez</option>
                         <option value="suggestion">Suggestion</option>
                         <option value="reclamation">Réclamation</option>
@@ -30,22 +48,22 @@
             <div class="form-group">
                 <div class="form-column">
                     <label for="feedbackName" class="required">Nom & Prénom</label>
-                    <input type="text" id="feedbackName" name="feedbackName">
+                    <input type="text" id="feedbackName" name="feedbackName" required aria-required="true">
                 </div>
                 <div class="form-column">
                     <label for="feedbackApartment" class="required">Appartement (Bloc/N°)</label>
-                    <input type="text" id="feedbackApartment" name="feedbackApartment">
+                    <input type="text" id="feedbackApartment" name="feedbackApartment" required aria-required="true" placeholder="Ex: Besma-5">
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="form-column">
                     <label for="feedbackEmail" class="required">Email</label>
-                    <input type="email" id="feedbackEmail" name="feedbackEmail">
+                    <input type="email" id="feedbackEmail" name="feedbackEmail" required aria-required="true" pattern="[^\s@]+@[^\s@]+\.[^\s@]+">
                 </div>
                 <div class="form-column">
                     <label for="feedbackPhone">Téléphone</label>
-                    <input type="tel" id="feedbackPhone" name="feedbackPhone">
+                    <input type="tel" id="feedbackPhone" name="feedbackPhone" pattern="[0-9\s\-\+\(\)]+" placeholder="Ex: +216 12 345 678">
                 </div>
             </div>
 
@@ -58,6 +76,8 @@
                             <option value="service">Service</option>
                             <option value="securite">Sécurité</option>
                             <option value="proprete">Propreté</option>
+                            <option value="maintenance">Maintenance</option>
+                            <option value="facturation">Facturation</option>
                             <option value="autre">Autre</option>
                         </select>
                     </div>
@@ -67,29 +87,185 @@
             <div class="form-group">
                 <div class="form-column">
                     <label for="feedbackMessage" class="required">Message</label>
-                    <textarea id="feedbackMessage" name="feedbackMessage" rows="5"></textarea>
+                    <textarea 
+                        id="feedbackMessage" 
+                        name="feedbackMessage" 
+                        rows="5" 
+                        required 
+                        aria-required="true"
+                        placeholder="Décrivez votre suggestion ou réclamation en détail...">
+                    </textarea>
+                </div>
+            </div>
+
+            <!-- File upload for evidence (optional) -->
+            <div class="form-group">
+                <div class="form-column">
+                    <label for="feedbackAttachment">Pièce jointe (optionnel)</label>
+                    <input type="file" id="feedbackAttachment" name="feedbackAttachment" accept="image/*,.pdf,.doc,.docx" multiple>
+                    <small style="color: #666; font-size: 12px;">Formats acceptés: Images, PDF, Word (max 5MB par fichier)</small>
                 </div>
             </div>
 
             <div class="btn-container">
+                <button type="button" class="btn btn-reset" onclick="resetFeedbackForm()">
+                    <i class="fas fa-redo"></i> RÉINITIALISER
+                </button>
                 <button type="submit" class="btn btn-submit">
-                    <i class="fas fa-paper-plane"></i> Envoyer
+                    <i class="fas fa-paper-plane"></i> ENVOYER
                 </button>
             </div>
-        </form>
+                </div>
+            </form>
+        </div>
         
         <footer>
-            <!-- Same footer as index.html -->
+            <div class="btn-container">
+                <button type="button" class="btn btn-suggestion" onclick="window.location.href='index.html'">
+                    <i class="fas fa-arrow-left"></i> Retour au formulaire principal
+                </button>
+            </div>
+            <p>Résidence Aqua Resort &copy; 2025 | Tous droits réservés</p>
+            <p>Formulaire de suggestion et réclamation - Version Luxe</p>
         </footer>
     </div>
     
     <script>
-        // Add to feedback.html
-        document.getElementById('feedbackType').addEventListener('change', function() {
-            document.getElementById('reclamationTypeContainer').style.display = 
-                this.value === 'reclamation' ? 'block' : 'none';
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show/hide reclamation type based on feedback type
+            document.getElementById('feedbackType').addEventListener('change', function() {
+                const reclamationContainer = document.getElementById('reclamationTypeContainer');
+                const reclamationType = document.getElementById('reclamationType');
+                
+                if (this.value === 'reclamation') {
+                    reclamationContainer.style.display = 'block';
+                    reclamationType.setAttribute('required', 'true');
+                    reclamationType.setAttribute('aria-required', 'true');
+                } else {
+                    reclamationContainer.style.display = 'none';
+                    reclamationType.removeAttribute('required');
+                    reclamationType.removeAttribute('aria-required');
+                    reclamationType.value = '';
+                }
+            });
+
+            // Form validation function
+            function validateFeedbackForm() {
+                const requiredFields = ['feedbackType', 'feedbackName', 'feedbackApartment', 'feedbackEmail', 'feedbackMessage'];
+                let isValid = true;
+
+                // Reset all field borders
+                const allFields = document.querySelectorAll('input, select, textarea');
+                allFields.forEach(field => field.style.borderColor = '#d4af37');
+
+                // Check required fields
+                requiredFields.forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    if (!field.value.trim()) {
+                        field.style.borderColor = '#dc3545';
+                        isValid = false;
+                    }
+                });
+
+                // Validate reclamation type if feedback type is reclamation
+                const feedbackType = document.getElementById('feedbackType').value;
+                if (feedbackType === 'reclamation') {
+                    const reclamationType = document.getElementById('reclamationType');
+                    if (!reclamationType.value.trim()) {
+                        reclamationType.style.borderColor = '#dc3545';
+                        isValid = false;
+                    }
+                }
+
+                // Email validation
+                const email = document.getElementById('feedbackEmail').value;
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (email && !emailRegex.test(email)) {
+                    document.getElementById('feedbackEmail').style.borderColor = '#dc3545';
+                    isValid = false;
+                }
+
+                // File size validation (max 5MB per file)
+                const fileInput = document.getElementById('feedbackAttachment');
+                if (fileInput.files.length > 0) {
+                    for (let file of fileInput.files) {
+                        if (file.size > 5 * 1024 * 1024) { // 5MB
+                            alert(`Le fichier "${file.name}" est trop volumineux. Taille maximale: 5MB`);
+                            isValid = false;
+                        }
+                    }
+                }
+
+                return isValid;
+            }
+
+            // Simple form submission
+            document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Hide previous messages
+                document.getElementById('feedbackSuccessMessage').style.display = 'none';
+                document.getElementById('feedbackErrorMessage').style.display = 'none';
+                
+                if (validateFeedbackForm()) {
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.innerHTML;
+                    
+                    // Show loading state
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+                    submitBtn.disabled = true;
+                    
+                    // Simulate form submission
+                    setTimeout(() => {
+                        // Show success message
+                        const successMsg = document.getElementById('feedbackSuccessMessage');
+                        successMsg.innerHTML = '✅ Votre feedback a été envoyé avec succès!';
+                        successMsg.style.display = 'block';
+                        
+                        // Reset form after successful submission
+                        setTimeout(() => {
+                            resetFeedbackForm();
+                            successMsg.style.display = 'none';
+                        }, 3000);
+                        
+                        // Restore button state
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
+                    }, 1500);
+                } else {
+                    showFeedbackErrorMessage('Veuillez remplir tous les champs obligatoires.');
+                }
+            });
+
+            function showFeedbackErrorMessage(message) {
+                const errorMsg = document.getElementById('feedbackErrorMessage');
+                errorMsg.innerHTML = '❌ ' + message;
+                errorMsg.style.display = 'block';
+                
+                setTimeout(() => errorMsg.style.display = 'none', 5000);
+            }
+
+            // Make validateFeedbackForm globally accessible
+            window.validateFeedbackForm = validateFeedbackForm;
         });
+
+        // Reset form function
+        function resetFeedbackForm() {
+            const form = document.getElementById('feedbackForm');
+            form.reset();
+            
+            // Hide reclamation type container
+            document.getElementById('reclamationTypeContainer').style.display = 'none';
+            
+            // Reset field borders
+            const allFields = document.querySelectorAll('input, select, textarea');
+            allFields.forEach(field => field.style.borderColor = '#d4af37');
+            
+            // Hide messages
+            document.getElementById('feedbackSuccessMessage').style.display = 'none';
+            document.getElementById('feedbackErrorMessage').style.display = 'none';
+        }
     </script>
-    <script src="script.js"></script>
+    <script src="script.min.js" defer></script>
 </body>
 </html>
