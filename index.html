@@ -9,7 +9,9 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <link rel="stylesheet" href="styles.min.css">
 
 </head>
 
@@ -17,7 +19,7 @@
     <div class="container">
         <header>
             <div class="logo-container">
-                <img src="Logo palm lake-01.jpg" alt="Aqua Resort Logo" class="logo-img">
+                <img src="Logo palm lake-01.jpg" alt="Aqua Resort Logo" class="logo-img" loading="lazy">
             </div>
             <h1>FORMULAIRE DE <span>Déclaration de Location</span></h1>
             <div class="subtitle">
@@ -33,7 +35,7 @@
         </div>
 
         <div class="form-container">
-            <form id="rentalform" action= "" method="POST" enctype="multipart/form-data">
+            <form id="rentalform" action= "" method="POST" enctype="multipart/form-data" novalidate>
                 <!-- Section 1: Déclarant Identity -->
                 <div class="form-section">
                     <h2>IDENTITÉ DU DÉCLARANT</h2>
@@ -618,7 +620,7 @@
                                 <button type="button" class="btn btn-reset" onclick="resetForm()">
                                     <i class="fas fa-redo"></i> RÉINITIALISER
                                 </button>
-                               <button type="button" class="btn btn-submit" onclick="if (validateForm()) submitAll()">
+<button type="button" id="previewPdfBtn" class="btn btn-submit">
 
                                     <i class="fas fa-check-circle"></i> SOUMETTRE LE FORMULAIRE
                                 </button>
@@ -643,20 +645,10 @@
             <p>Formulaire de déclaration de location - Version Luxe</p>
         </footer>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            setTimeout(function () {
-                const styles = document.createElement('link');
-                styles.rel = 'stylesheet';
-                styles.href =
-                    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
-                document.head.appendChild(styles);
-            }, 500);
-        });
-    </script>
-    <script src="script.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-</body>
+    <script src="script.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/4.0.0/signature_pad.min.js" defer></script>
+
 
 </html>
